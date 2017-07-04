@@ -1,0 +1,5 @@
+world_spawn: world
+world_supermarkets:
+sur_1:
+  displayName: '淘物城'
+  enterGiveHorse: true

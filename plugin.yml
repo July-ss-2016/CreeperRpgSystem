@@ -1,0 +1,6 @@
+name: CreeperRpgSystem
+main: vip.creeper.mcserverplugins.creeperrpgsystem.Main
+author: July_ss
+version: 1.0.0
+commands:
+  crs:
