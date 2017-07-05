@@ -1,0 +1,10 @@
+<component name="ArtifactManager">
+  <artifact type="jar" build-on-make="true" name="CreeperRpgSystem:jar">
+    <output-path>$PROJECT_DIR$/../../../McTestServers/Spigot1.8.8/plugins</output-path>
+    <root id="archive" name="CreeperRpgSystem.jar">
+      <element id="file-copy" path="$PROJECT_DIR$/plugin.yml" />
+      <element id="dir-copy" path="$PROJECT_DIR$/resource" />
+      <element id="module-output" name="CreeperRpgSystem" />
+    </root>
+  </artifact>
+</component>
