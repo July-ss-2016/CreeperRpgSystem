@@ -19,7 +19,7 @@ public class FileUtil {
             String lineText;
             StringBuilder sb = new StringBuilder();
             while ((lineText = bufferedReader.readLine()) != null){
-                sb.append(lineText + MessageUtil.LINE_SEPARATOR);
+                sb.append(lineText + MsgUtil.LINE_SEPARATOR);
             }
             bufferedReader.close();
             reader.close();
@@ -30,6 +30,7 @@ public class FileUtil {
         }
         return false;
     }
+
     public static boolean writeFile(String path, String data) {
         File file = new File(path);
         try {

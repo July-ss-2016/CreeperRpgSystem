@@ -2,6 +2,7 @@ package vip.creeper.mcserverplugins.creeperrpgsystem;
 
 import me.clip.placeholderapi.external.EZPlaceholderHook;
 import org.bukkit.entity.Player;
+import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
 
 /**
  * Created by July_ on 2017/7/4.
@@ -14,11 +15,11 @@ public class PlaceHolderApiExpansion extends EZPlaceholderHook {
     }
 
     public String onPlaceholderRequest(Player player, String str) {
+        String playerName = player.getName();
         if (str.startsWith("is_locked_stange")) {
-            String stangeName = str.replace("is_locked_stage", "");
-
+            String stageName = str.replace("is_locked_stage_", "");
+            return StageManager.isStageLocked(playerName, stageName) ? "已解锁" : "未解锁";
         }
         return null;
-
     }
 }

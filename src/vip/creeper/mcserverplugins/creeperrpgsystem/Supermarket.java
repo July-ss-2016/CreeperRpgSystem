@@ -4,26 +4,31 @@ package vip.creeper.mcserverplugins.creeperrpgsystem;
  * Created by July_ on 2017/7/4.
  */
 public class Supermarket {
-    private String name;
+    private String worldName;
+    private String displayName;
     private boolean enterGiveHorse;
+    private String welcomeMsg;
 
-    public Supermarket(String name) {
-        this.name = name;
+    public Supermarket(String worldName, String displayName, String welcomeMsg, boolean enterGiveHorse) {
+        this.worldName = worldName;
+        this.displayName = displayName;
+        this.welcomeMsg = welcomeMsg;
+        this.enterGiveHorse = enterGiveHorse;
     }
 
-    public String getName() {
-        return this.name;
+    public String getWorldName() {
+        return this.worldName;
     }
 
-    public void setName(String name) {
-        this.name = name;
+    public String getDisplayName() {
+        return this.displayName;
     }
 
     public boolean getEnterGiveHorse() {
         return this.enterGiveHorse;
     }
 
-    public void setEnterGiveHorse(boolean b) {
-        this.enterGiveHorse = b;
+    public String getWelcomeMsg() {
+        return this.welcomeMsg;
     }
 }
