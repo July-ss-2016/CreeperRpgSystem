@@ -1,7 +1,10 @@
 version: 1.0.0
-world_spawn: world
-world_markets:
-  w_market_0:
-    displayName: '淘物城'
-    welcomeMsg: '%head_msg%欢迎来到淘物城,在这里你能买到许多强大的装备~'
-    enterGiveHorse: true
+server_spawn_loc:
+  world: world
+  x: 722.5
+  y: 133
+  z: -728.5
+  yaw: 0.20561647
+  pitch: 3.638772
+stage_whitelist_cmds:
+- '/spawn'
