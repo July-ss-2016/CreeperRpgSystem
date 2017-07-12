@@ -1,20 +1,18 @@
 stages:
-  STAGE_AO:
-    spawn_loc:
-      world: w_instance_0
-      x: 1512.384976186346
-      y: 5.0
-      z: -655.424771954853
-      yaw: -219.50006
-      pitch: 4.6000004
+  SAO:
     challenges:
-    - 'MOB_A0:10'
-    enterMsg:
-    - ' '
-    - "&e你即将挑战副本关卡,请仔细阅读以下信息,准备好了请点击按钮进入~"
-    - "&f关卡代码 &b: &fSTAGE_AO"
-    - "&f难度系数 &b: &f0.5"
-    - "&f击杀要求 &b: &f初级僵尸 &b> &f10"
-    - "&f通关奖励 &b: &f解锁关卡 &b> &fA1   &f御灵碎片 &b> &f10"
+    - MA0:10
+    confirmMsg:
+    - 'fl'
+    - 'sl'
     finishCmd:
     - 'mm mobs '
+  SA1:
+    #关卡代码;再CRS中许多东西都会用代码表示
+    spawn_loc: w_res_0,1,1,1,1,1
+    challenges:
+    - kill,MA0:4
+    confirmMsg:
+    - 'fl'
+    - 'sl'
+    - '%enter_json_SA0'
