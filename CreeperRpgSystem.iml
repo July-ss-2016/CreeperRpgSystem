@@ -23,7 +23,34 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../JavaCodeApi/Api/minecraft/plugins/PlaceholderAPI (1).jar!/" />
+          <root url="jar://$MODULE_DIR$/../../../McTestServers/RpgSurvival_0/plugins/MythicMobs.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../JavaCodeApi/Api/minecraft/plugins/Actionbar.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../JavaCodeApi/Api/minecraft/plugins/CreeperTitleAPI.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../JavaCodeApi/Api/minecraft/plugins/PlaceholderApi.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

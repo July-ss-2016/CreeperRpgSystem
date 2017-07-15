@@ -1,44 +1,37 @@
 package vip.creeper.mcserverplugins.creeperrpgsystem.configs;
 
+import org.bukkit.Bukkit;
+import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import vip.creeper.mcserverplugins.creeperrpgsystem.IConfig;
+import org.bukkit.plugin.java.JavaPlugin;
+import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Settings;
-import vip.creeper.mcserverplugins.creeperrpgsystem.Supermarket;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.Iterator;
-import java.util.Map;
 
 /**
  * Created by July_ on 2017/7/4.
  */
-public class PluginConfig implements IConfig {
+public class PluginConfig implements ConfigImpl {
+    private JavaPlugin plugin = CreeperRpgSystem.getInstance();
 
 
     public void loadConfig() {
-        File file = new File(FileUtil.PLUGINDATA_FOLDER_PATH + File.separator + "configs" + File.separator + "PluginConfig.yml");
-        /*
-        if (!file.exists()) {
-            MsgUtil.info("文件 " + file.getAbsolutePath() + " 被创建.");
-        }
-        */
-        YamlConfiguration yaml = YamlConfiguration.loadConfiguration(file);
-        Settings.version = yaml.getString("version");
-        Settings.spawnWorld = yaml.getString("world_spawn");
-        HashMap<String,Object> marketCfgMap = (HashMap)yaml.getConfigurationSection("world_markets").getValues(false);
-        //添加super信息至map
-        Iterator <Map.Entry<String, Object>> iter = marketCfgMap.entrySet().iterator();
-        while (iter.hasNext()) {
-            Map.Entry<String, Object> entry = iter.next();
-            String worldName = entry.getKey();
-            ConfigurationSection cfg = (ConfigurationSection)entry.getValue();
-            MsgUtil.info("集市 " + worldName + " 被载入.");
-            Settings.marketMap.put(worldName, new Supermarket(worldName, cfg.getString("displayName "), cfg.getString("welcomeMsg"), cfg.getBoolean("enterGiveHorse")));
-        }
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "PluginConfig.yml");
+            YamlConfiguration rootYml = YamlConfiguration.loadConfiguration(file);
+            ConfigurationSection spawnLocSection = rootYml.getConfigurationSection("server_spawn_loc");//服务器出生点Sec
+
+            Settings.version = rootYml.getString("version");
+            Settings.spawnLoc = new Location(Bukkit.getWorld(spawnLocSection.getString("world")), spawnLocSection.getDouble("x"), spawnLocSection.getDouble("y"), spawnLocSection.getDouble("z"),
+                    Float.parseFloat(spawnLocSection.getString("yaw")), Float.parseFloat(spawnLocSection.getString("pitch")));
+            Settings.stageWhitelistCommands = rootYml.getStringList("stage_whitelist_commands");
+            MsgUtil.info("插件配置已载入.");
+        });
     }
 
 }

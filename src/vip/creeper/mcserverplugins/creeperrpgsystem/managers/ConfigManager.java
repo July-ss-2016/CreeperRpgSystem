@@ -1,38 +1,63 @@
 package vip.creeper.mcserverplugins.creeperrpgsystem.managers;
 
-import vip.creeper.mcserverplugins.creeperrpgsystem.Main;
+import org.bukkit.Location;
+import vip.creeper.mcserverplugins.creeperrpgsystem.ConfigType;
+import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.utils.ConfigUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 import java.io.File;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by July_ on 2017/7/7.
  */
 public class ConfigManager {
-    private static final List<String> CONFIG_SUBFILE_NAME_LIST = Arrays.asList("PluginConfig.yml", "StageConfig.yml");
-    private static Main plugin = Main.getInstance();
+    private static final List<String> CONFIG_SUBFILE_NAMES = Arrays.asList("PluginConfig.yml", "StageConfig.yml", "MarketConfig.yml");
+    private static final HashMap<ConfigType, ConfigImpl> configs = new HashMap<>();
 
+
+    public static boolean loadConfig(ConfigType configType) {
+        if (!configs.containsKey(configType)) {
+            return false;
+        }
+
+        configs.get(configType).loadConfig();
+        return true;
+    }
+
+    public static void registerConfig(ConfigType configType, ConfigImpl config) {
+        configs.put(configType, config);
+    }
 
     public static void loadAllConfig() {
-        File configDataFolder = new File(FileUtil.PLUGINDATA_FOLDER_PATH + File.separator + "configs");
+        File configDataFolder = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs");
+
         if (!configDataFolder.exists()) {
             configDataFolder.mkdirs();
-            MsgUtil.info("文件(夹) " + configDataFolder.getAbsolutePath() + " 被创建.");
+            MsgUtil.info("文件(夹) = " + configDataFolder.getAbsolutePath() + " 被创建.");
         }
+
         //拷贝资源
-        for (int i = 0; i < CONFIG_SUBFILE_NAME_LIST.size(); i++) {
-            String configFileName = CONFIG_SUBFILE_NAME_LIST.get(i);
-            File file = new File(FileUtil.PLUGINDATA_FOLDER_PATH  + File.separator + "configs" + File.separator + configFileName);
+        for (String configFileName : CONFIG_SUBFILE_NAMES) {
+            File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + configFileName);
+
             if (!file.exists()) {
-                FileUtil.copySrcFile(CONFIG_SUBFILE_NAME_LIST.get(i), FileUtil.PLUGINDATA_FOLDER_PATH + File.separator + "configs" + File.separator + configFileName);
-                MsgUtil.info("文件(夹) " + file.getAbsolutePath() + " 被创建.");
+                FileUtil.copySrcFile(configFileName, FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + configFileName);
+                MsgUtil.info("文件(夹) = " + file.getAbsolutePath() + " 被创建.");
             }
         }
-        plugin.getPluginConfig().loadConfig();
-        plugin.getStageConfig().loadConfig();
+
+        for (Map.Entry<ConfigType, ConfigImpl> entry : configs.entrySet()) {
+            entry.getValue().loadConfig();
+        }
+    }
+
+    public static boolean setServerSpawnLoc(Location loc) {
+        File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "PluginConfig.yml");
+
+        return ConfigUtil.setLocConfig(file, "server_spawn_loc", loc);
     }
 
 }

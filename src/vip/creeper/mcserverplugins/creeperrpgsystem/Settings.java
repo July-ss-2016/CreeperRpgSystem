@@ -1,13 +1,14 @@
 package vip.creeper.mcserverplugins.creeperrpgsystem;
 
-import java.util.HashMap;
+import org.bukkit.Location;
+
+import java.util.List;
 
 /**
  * Created by July_ on 2017/7/7.
  */
 public class Settings {
-    public static String spawnWorld;
+    public static Location spawnLoc;
     public static String version;
-    public static HashMap<String, Supermarket> marketMap = new HashMap<String,Supermarket>();
-    public static HashMap<String, Stage> stageMap = new HashMap<String, Stage>();
+    public static List<String> stageWhitelistCommands;
 }

@@ -7,6 +7,6 @@ markets:
       z: 1
       yaw: 1
       pitch: 1
-    displayName: '淘物城'
-    welcomeMsg: '%head_msg%欢迎来到淘物城,在这里你能买到许多强大的装备~'
-    enterGiveHorse: true
+    display_name: '淘物城'
+    welcome_msg: '%head_msg%欢迎来到淘物城,在这里你能买到许多强大的装备~'
+    enter_give_horse: true
