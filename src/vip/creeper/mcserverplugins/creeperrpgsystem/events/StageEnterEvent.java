@@ -13,17 +13,10 @@ public class StageEnterEvent extends Event {
     private Player player;
     private Stage stage;
 
+
     public StageEnterEvent(Player player, Stage stage) {
         this.player = player;
         this.stage = stage;
-    }
-
-    public Player getPlayer() {
-        return this.player;
-    }
-
-    public Stage getStage() {
-        return this.stage;
     }
 
     public HandlerList getHandlers() {
@@ -32,5 +25,13 @@ public class StageEnterEvent extends Event {
 
     public static HandlerList getHandlerList() {
         return handlers;
+    }
+
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    public Stage getStage() {
+        return this.stage;
     }
 }

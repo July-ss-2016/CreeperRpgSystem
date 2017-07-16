@@ -45,7 +45,7 @@ public class MarketManager {
     }
 
     //注销所有集市
-    public static void unregisterAllMarket() {
+    public static void unregisterAllMarkets() {
         stageCodeForMarkets.clear();
         worldNameForMarkets.clear();
     }

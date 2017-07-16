@@ -13,6 +13,7 @@ public class MarketEnterEvent extends Event {
     private Player player;
     private  Market market;
 
+
     public MarketEnterEvent(Player player, Market market) {
         this.player = player;
         this.market = market;

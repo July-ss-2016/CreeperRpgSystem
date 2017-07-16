@@ -12,7 +12,7 @@ public class StageMobKillingCounter {
     private Player player;
     private Stage stage;
     private int totalChallengeCount = 0;
-    private static HashMap<String, Integer> counter = new HashMap<>();
+    private static HashMap<String, Integer> counter ;
 
 
     public StageMobKillingCounter(Player player, Stage stage) {
@@ -23,6 +23,7 @@ public class StageMobKillingCounter {
             totalChallengeCount += entry.getValue();
         }
 
+        counter = new HashMap<String, Integer>();
     }
 
     public void addCount(String mobName) {

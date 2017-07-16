@@ -1,38 +1,44 @@
 package vip.creeper.mcserverplugins.creeperrpgsystem;
 
+import io.lumine.xikage.mythicmobs.adapters.bukkit.BukkitAdapter;
+import io.lumine.xikage.mythicmobs.items.MythicItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.PlayerInventory;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageEnterEvent;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.ConfigUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 import java.io.File;
-import java.util.HashMap;
-import java.util.List;
+import java.util.*;
 
 /**
  * Created by July_ on 2017/7/7.
  */
 public class Stage {
-    private org.bukkit.Location spawnLoc;
     private String stageCode;
+    private org.bukkit.Location spawnLoc;
+    private boolean freeStage;
     private HashMap<String, Integer> challenges;
     private List<String> confirmMessages;
-    private List<String> finishingCommands;
     private List<String> finishedDeblockingStages;
-    private boolean freeStage;
+    private List<String> finishedRewardCommands;
+    private HashMap<Optional<MythicItem>, Integer> finishedRewardItems;
 
-    public Stage(String stageCode, Location spawnLoc, HashMap<String, Integer> challenges, List<String> confirmMessages, List<String> finishCommands, boolean freeStage, List<String> finishedDeblockingStages) {
-        this.spawnLoc = spawnLoc;
+    public Stage(String stageCode, Location spawnLoc, boolean freeStage, HashMap<String, Integer> challenges, List<String> confirmMessages, List<String> finishedDeblockingStages, List<String> finishedRewardCommands,
+                 HashMap<Optional<MythicItem>, Integer> finishedRewardItems) {
         this.stageCode = stageCode;
+        this.spawnLoc = spawnLoc;
+        this.freeStage = freeStage;
         this.challenges = challenges;
         this.confirmMessages = confirmMessages;
-        this.finishingCommands = finishCommands;
-        this.freeStage = freeStage;
         this.finishedDeblockingStages = finishedDeblockingStages;
+        this.finishedRewardCommands = finishedRewardCommands;
+        this.finishedRewardItems = finishedRewardItems;
     }
 
     public boolean isFreeStage() {
@@ -55,13 +61,14 @@ public class Stage {
         return this.confirmMessages;
     }
 
-    public List<String> getFinishingCommands() {
-        return this.finishingCommands;
+    public List<String> finishedRewardCommands() {
+        return this.finishedRewardCommands;
     }
 
     public List<String> getFinishedDeblockingStages() {
         return this.finishedDeblockingStages;
     }
+
     public void tp(Player player) {
         StageEnterEvent event = new StageEnterEvent(player, this);
         Bukkit.getPluginManager().callEvent(event);
@@ -96,4 +103,30 @@ public class Stage {
     public boolean isChallengeMob(String mobCode) {
         return challenges.containsKey(mobCode);
     }
+
+    public void performFinishedRewardCommands(Player player) {
+        for (String cmd : this.finishedRewardCommands) {
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MsgUtil.replacePlayerVariable(cmd, player));
+        }
+    }
+
+    public boolean giveFinishedRewardItems(Player player) {
+        PlayerInventory playerInventory = player.getInventory();
+        Iterator iter = finishedRewardItems.entrySet().iterator();
+
+        while (iter.hasNext()) {
+            Map.Entry<Optional<MythicItem>, Integer> entry = (Map.Entry<Optional<MythicItem>, Integer>) iter.next();
+            MythicItem mythicItem = entry.getKey().get();
+            int amount = entry.getValue();
+
+            for (int i = 0; i < amount; i++) {
+                if (playerInventory.firstEmpty() == -1) {
+                    return false;
+                }
+                playerInventory.addItem(new ItemStack[] {BukkitAdapter.adapt(mythicItem.generateItemStack(1, BukkitAdapter.adapt(player), BukkitAdapter.adapt(player)))});
+            }
+        }
+        return true;
+    }
+
 }

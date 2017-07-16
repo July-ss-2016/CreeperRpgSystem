@@ -1,14 +1,15 @@
 package vip.creeper.mcserverplugins.creeperrpgsystem.managers;
 
-import org.bukkit.Location;
 import vip.creeper.mcserverplugins.creeperrpgsystem.ConfigType;
 import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
-import vip.creeper.mcserverplugins.creeperrpgsystem.utils.ConfigUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 import java.io.File;
-import java.util.*;
+import java.util.Arrays;
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
 
 /**
  * Created by July_ on 2017/7/7.
@@ -54,10 +55,7 @@ public class ConfigManager {
         }
     }
 
-    public static boolean setServerSpawnLoc(Location loc) {
-        File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "PluginConfig.yml");
-
-        return ConfigUtil.setLocConfig(file, "server_spawn_loc", loc);
+    public static ConfigImpl getConfig(ConfigType configType) {
+        return configs.get(configType);
     }
-
 }

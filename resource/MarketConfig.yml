@@ -2,11 +2,11 @@ markets:
   MARKET_A0:
     spawn_loc:
       world: w_market_0
-      x: 1
-      y: 1
-      z: 1
-      yaw: 1
-      pitch: 1
+      x: 960.1589564949155
+      y: 6.0
+      z: 323.0226793472376
+      yaw: 179.24593
+      pitch: -16.09415
     display_name: '淘物城'
     welcome_msg: '%head_msg%欢迎来到淘物城,在这里你能买到许多强大的装备~'
     enter_give_horse: true

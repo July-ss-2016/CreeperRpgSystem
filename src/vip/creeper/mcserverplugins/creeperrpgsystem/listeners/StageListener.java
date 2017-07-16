@@ -18,7 +18,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
 import vip.creeper.mcserverplugins.creeperrpgsystem.StageMobKillingCounter;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.RpgMobKilledByPlayerEvent;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageEnterEvent;
-import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageFinshedEvent;
+import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageFinishedEvent;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageLeaveEvent;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.RpgPlayerManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
@@ -109,26 +109,37 @@ public class StageListener implements Listener {
 
         //完成任务，触发事件，让事件去处理
         if (totalFinishingPercent == 1) {
-            Bukkit.getPluginManager().callEvent(new StageFinshedEvent(RpgPlayerManager.getRpgPlayer(playerName), stage));
+            Bukkit.getPluginManager().callEvent(new StageFinishedEvent(RpgPlayerManager.getRpgPlayer(playerName), stage));
         }
     }
 
     //事件_完成任务
     @EventHandler
-    public void onStageFinishedEvent(StageFinshedEvent event) {
+    public void onStageFinishedEvent(StageFinishedEvent event) {
         RpgPlayer rpgPlayer = event.getRpgPlayer();
         Player bukkitPlayer = rpgPlayer.getBukkitPlayer();
         String playerName = bukkitPlayer.getName();
         Stage stage = event.getStage();
         String stageCode = stage.getStageCode();
+        boolean giveFinishedRewardKitResult = false;
 
+        //设置通关印记
         rpgPlayer.setStageState(stageCode, true);
         Util.spawnFirework(bukkitPlayer.getLocation());
         playerStageMobCounters.remove(playerName);
-        MsgUtil.sendBroaddcastMsg("&d玩家 &e" + playerName + " &d通过了关卡 &e" + stageCode + "&d !");
+        stage.performFinishedRewardCommands(bukkitPlayer);
+        giveFinishedRewardKitResult = stage.giveFinishedRewardItems(bukkitPlayer);
+        MsgUtil.sendBroaddcastMsg("&d玩家 &b" + playerName + " &d成功通过了关卡 &b" + stageCode + "&d !");
         MsgUtil.sendTitle(bukkitPlayer, "&d任务完成");
-        MsgUtil.sendMsg(bukkitPlayer, "&e5秒后你将被传送到主城.");
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToSpawnPoint(bukkitPlayer)), 100);
+
+        if (giveFinishedRewardKitResult) {
+            MsgUtil.sendMsg(bukkitPlayer, "&d任务奖励成功发放!");
+        } else {
+            MsgUtil.sendMsg(bukkitPlayer, "&d任务奖励发放失败!原因:背包空间不足,StageCode=" + stageCode + ".");
+        }
+
+        MsgUtil.sendMsg(bukkitPlayer, "&e5秒后 你将被传送到主城.");
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToSpawnPoint(bukkitPlayer)), 100L);
         return;
     }
 
@@ -141,6 +152,7 @@ public class StageListener implements Listener {
 
         //不含key，或含key但关卡已变
         if (!playerStageMobCounters.containsKey(playerName) || playerStageMobCounters.containsKey(playerName) && !playerStageMobCounters.get(playerName).getStage().getStageCode().equals(stage.getStageCode())) {
+            MsgUtil.warring("c");
             playerStageMobCounters.put(playerName, new StageMobKillingCounter(player, stage));
         }
 

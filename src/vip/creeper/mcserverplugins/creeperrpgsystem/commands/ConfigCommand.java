@@ -6,6 +6,7 @@ import org.bukkit.entity.Player;
 import vip.creeper.mcserverplugins.creeperrpgsystem.ConfigType;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Market;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
+import vip.creeper.mcserverplugins.creeperrpgsystem.configs.PluginConfig;
 import vip.creeper.mcserverplugins.creeperrpgsystem.impls.CommandImpl;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.ConfigManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
@@ -38,25 +39,34 @@ public class ConfigCommand implements CommandImpl {
                 String prefix = args[3].substring(0, args[3].indexOf("_")).toLowerCase();
 
                 switch (prefix) {
+                    case "spawn":
+                        boolean serverSpawnLocSetResult = ((PluginConfig)ConfigManager.getConfig(ConfigType.CONFIG_PLUGIN)).setServerSpawnLoc(player.getLocation());
+
+                        if (serverSpawnLocSetResult) {
+                            ConfigManager.loadConfig(ConfigType.CONFIG_PLUGIN);
+                        }
+
+                        MsgUtil.sendMsg(player, serverSpawnLocSetResult ? "&b服务器出生点设置成功!" : "&c服务器出生点设置失败!");
+                        return true;
                     case "market":
                         Market market = MarketManager.getMarketByMarketCode(args[3]);
-                        boolean marketResult = market.setSpawnLoc(player.getLocation());
+                        boolean marketSpawnLocSetResult = market.setSpawnLoc(player.getLocation());
 
-                        if (marketResult) {
+                        if (marketSpawnLocSetResult) {
                             ConfigManager.loadConfig(ConfigType.CONFIG_MARKET);
                         }
 
-                        MsgUtil.sendMsg(player, marketResult ? "&b集市出生点设置成功!" : "&c集市出生点设置失败!");
+                        MsgUtil.sendMsg(player, marketSpawnLocSetResult ? "&b集市出生点设置成功!" : "&c集市出生点设置失败!");
                         return true;
                     case "stage":
                         Stage stage = StageManager.getStage(args[3]);
-                        boolean stageResult = stage.setSpawnLoc(player.getLocation());
+                        boolean stageSpawnLocSetResult = stage.setSpawnLoc(player.getLocation());
 
-                        if (stageResult) {
+                        if (stageSpawnLocSetResult) {
                             ConfigManager.loadConfig(ConfigType.CONFIG_STAGE);
                         }
 
-                        MsgUtil.sendMsg(player, stageResult ? "&b设置成功!" : "&c设置失败!");
+                        MsgUtil.sendMsg(player, stageSpawnLocSetResult ? "&b设置成功!" : "&c设置失败!");
                         return true;
                     default:
                         MsgUtil.sendMsg(player, "&c参数错误!");

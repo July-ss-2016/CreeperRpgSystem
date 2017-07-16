@@ -5,9 +5,10 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Settings;
+import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.utils.ConfigUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
@@ -34,4 +35,9 @@ public class PluginConfig implements ConfigImpl {
         });
     }
 
+    public boolean setServerSpawnLoc(Location loc) {
+        File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "PluginConfig.yml");
+
+        return ConfigUtil.setLocConfig(file, "server_spawn_loc", loc);
+    }
 }

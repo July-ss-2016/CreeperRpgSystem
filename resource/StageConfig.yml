@@ -8,17 +8,19 @@ stages:
       yaw: -219.50006
       pitch: 4.6000004
     free_stage: true
-    #任务
+    #mythicmobs mobs
     challenges:
     - 'MOB_A0:10'
-    enter_messages:
+    confirm_messages:
     - ''
     - "&e你即将挑战副本关卡,请仔细阅读以下信息,准备好了请点击按钮进入~"
     - "&f关卡代码 &b: &fSTAGE_AO"
     - "&f难度系数 &b: &f0.5"
     - "&f击杀要求 &b: &f初级僵尸 &b> &f10"
-    - "&f通关奖励 &b: &f解锁关卡 &b> &fA1   &f御灵碎片 &b> &f10"
-    finishing_commands:
-    - 'mm mobs '
-    finishing_deblocking_stages:
+    - "&f通关奖励 &b: &f解锁关卡 &b> &fA1   &f御灵碎片 &b> &f8"
+    #mythicmobs items
+    finished_reward_commands: {}
+    finished_reward_items:
+    - 'REWARD_A0:5'
+    finished_deblocking_stages:
     - 'STAGE_A1'

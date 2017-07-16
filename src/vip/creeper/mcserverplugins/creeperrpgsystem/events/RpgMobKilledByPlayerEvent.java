@@ -23,7 +23,7 @@ public class RpgMobKilledByPlayerEvent extends Event {
         return handlerList;
     }
 
-    public HandlerList getHandlerList() {
+    public static HandlerList getHandlerList() {
         return handlerList;
     }
 

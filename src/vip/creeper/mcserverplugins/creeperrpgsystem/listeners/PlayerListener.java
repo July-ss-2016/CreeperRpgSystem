@@ -4,10 +4,10 @@ import org.bukkit.Bukkit;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.PlayerDeathEvent;
 import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import org.bukkit.plugin.java.JavaPlugin;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Settings;
@@ -29,9 +29,9 @@ public class PlayerListener implements Listener {
 
         Bukkit.getScheduler().runTask(plugin, () -> {
             Util.teleportToSpawnPoint(player);
+            RpgPlayerManager.registerRpgPlayer(player);
         });
 
-        RpgPlayerManager.registerRpgPlayer(player);
     }
 
     @EventHandler
@@ -43,11 +43,18 @@ public class PlayerListener implements Listener {
 
     //事件_玩家死在副本世界
     @EventHandler
-    public void onPlayerDeathEvent(PlayerDeathEvent event) {
-        Player player = event.getEntity();
+    public void onPlayerDeathEvent(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
 
         if (StageManager.isStageWorld(player.getWorld().getName())) {
-            Util.teleportToSpawnPoint(player);
+
+            Bukkit.getScheduler().runTask(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    Util.teleportToSpawnPoint(player);
+                }
+            });
+
             MsgUtil.sendMsg(player, "&e你死了,之前关卡的任务进度任然被保存着.");
         }
     }

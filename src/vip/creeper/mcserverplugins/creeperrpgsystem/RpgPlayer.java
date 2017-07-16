@@ -56,6 +56,12 @@ public class RpgPlayer {
         }
 
         if (state) {
+
+            //禁止重复
+            if (temp.contains(stageCode)) {
+                return false;
+            }
+
             temp.add(stageCode);
         } else {
             temp.remove(stageCode);

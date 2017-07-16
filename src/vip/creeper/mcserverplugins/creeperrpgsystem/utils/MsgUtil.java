@@ -65,4 +65,8 @@ public class MsgUtil {
     public static void sendBroaddcastMsg(String msg) {
         Bukkit.getServer().broadcastMessage(HEAD_MSG + ChatColor.translateAlternateColorCodes('&', msg));
     }
+
+    public static String replacePlayerVariable(String msg, Player player) {
+        return msg.replace("%player_name%", player.getName());
+    }
 }

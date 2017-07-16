@@ -14,17 +14,17 @@ public class StageLeaveEvent extends Event {
     private Stage stage;
 
 
-    public HandlerList getHandlers() {
-        return this.handlerList;
-    }
-
-    public HandlerList getHandlerList() {
-        return this.handlerList;
-    }
-
     public StageLeaveEvent(Player player, Stage stage) {
         this.player = player;
         this.stage = stage;
+    }
+
+    public HandlerList getHandlers() {
+        return handlerList;
+    }
+
+    public static HandlerList getHandlerList() {
+        return handlerList;
     }
 
     public Player getPlayer() {

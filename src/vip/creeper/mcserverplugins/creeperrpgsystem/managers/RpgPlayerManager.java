@@ -27,5 +27,8 @@ public class RpgPlayerManager {
         rpgPlayers.remove(player.getName());
     }
 
+    public static void unreigsterAllPlayers() {
+        rpgPlayers.clear();
+    }
 }
 

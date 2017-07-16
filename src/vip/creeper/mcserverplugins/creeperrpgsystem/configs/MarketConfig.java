@@ -24,7 +24,7 @@ public class MarketConfig implements ConfigImpl {
 
     public void loadConfig() {
         Bukkit.getScheduler().runTask(plugin, () -> {
-            MarketManager.unregisterAllMarket();
+            MarketManager.unregisterAllMarkets();
 
             File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "MarketConfig.yml");
             YamlConfiguration rootYml = YamlConfiguration.loadConfiguration(file);
