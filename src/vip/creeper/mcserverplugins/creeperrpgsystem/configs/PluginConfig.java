@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import org.bukkit.plugin.java.JavaPlugin;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Settings;
 import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
@@ -18,7 +17,8 @@ import java.io.File;
  * Created by July_ on 2017/7/4.
  */
 public class PluginConfig implements ConfigImpl {
-    private JavaPlugin plugin = CreeperRpgSystem.getInstance();
+    private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
+    private static  Settings settings =  plugin.getSettings();
 
 
     public void loadConfig() {
@@ -27,14 +27,15 @@ public class PluginConfig implements ConfigImpl {
             YamlConfiguration rootYml = YamlConfiguration.loadConfiguration(file);
             ConfigurationSection spawnLocSection = rootYml.getConfigurationSection("server_spawn_loc");//服务器出生点Sec
 
-            Settings.version = rootYml.getString("version");
-            Settings.spawnLoc = new Location(Bukkit.getWorld(spawnLocSection.getString("world")), spawnLocSection.getDouble("x"), spawnLocSection.getDouble("y"), spawnLocSection.getDouble("z"),
+            settings.configVersion = rootYml.getString("version");
+            settings.serverSpawnLocation = new Location(Bukkit.getWorld(spawnLocSection.getString("world")), spawnLocSection.getDouble("x"), spawnLocSection.getDouble("y"), spawnLocSection.getDouble("z"),
                     Float.parseFloat(spawnLocSection.getString("yaw")), Float.parseFloat(spawnLocSection.getString("pitch")));
-            Settings.stageWhitelistCommands = rootYml.getStringList("stage_whitelist_commands");
+            settings.stageWhitelistCommands = rootYml.getStringList("stage_whitelist_commands");
             MsgUtil.info("插件配置已载入.");
         });
     }
 
+    //设置服务器出生点
     public boolean setServerSpawnLoc(Location loc) {
         File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "PluginConfig.yml");
 

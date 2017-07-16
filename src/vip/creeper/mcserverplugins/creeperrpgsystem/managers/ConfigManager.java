@@ -19,6 +19,7 @@ public class ConfigManager {
     private static final HashMap<ConfigType, ConfigImpl> configs = new HashMap<>();
 
 
+    //载入配置
     public static boolean loadConfig(ConfigType configType) {
         if (!configs.containsKey(configType)) {
             return false;
@@ -28,10 +29,12 @@ public class ConfigManager {
         return true;
     }
 
+    //注册配置
     public static void registerConfig(ConfigType configType, ConfigImpl config) {
         configs.put(configType, config);
     }
 
+    //载入所有配置
     public static void loadAllConfig() {
         File configDataFolder = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs");
 
@@ -55,6 +58,7 @@ public class ConfigManager {
         }
     }
 
+    //得到配置
     public static ConfigImpl getConfig(ConfigType configType) {
         return configs.get(configType);
     }

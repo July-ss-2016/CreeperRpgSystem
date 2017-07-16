@@ -20,6 +20,7 @@ import java.util.Random;
  */
 public class Util {
     private static final Random random = new Random();
+    private static Settings settings = CreeperRpgSystem.getInstance().getSettings();
 
 
     //得到随机值
@@ -38,8 +39,8 @@ public class Util {
     }
 
     //回主城
-    public static void teleportToSpawnPoint(Player player) {
-        player.teleport(Settings.spawnLoc);
+    public static void teleportToServerSpawnPoint(Player player) {
+        player.teleport(settings.serverSpawnLocation);
     }
 
     //产生烟花

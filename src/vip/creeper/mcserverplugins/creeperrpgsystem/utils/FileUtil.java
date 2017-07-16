@@ -8,7 +8,7 @@ import java.io.*;
  * Created by July_ on 2017/7/5.
  */
 public class FileUtil {
-    private static final CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
+    private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
     public static final String PLUGIN_DATA_FOLDER_PATH = plugin.getDataFolder().getAbsolutePath();
 
     //从jar包复制文件
@@ -21,7 +21,7 @@ public class FileUtil {
             StringBuilder sb = new StringBuilder();
 
             while ((lineText = bufferedReader.readLine()) != null){
-                sb.append(lineText + MsgUtil.LINE_SEPARATOR);
+                sb.append(lineText).append(MsgUtil.LINE_SEPARATOR);
             }
 
             bufferedReader.close();
@@ -36,7 +36,7 @@ public class FileUtil {
     }
 
     //写文件
-    public static boolean writeFile(String path, String data) {
+    private static void writeFile(String path, String data) {
         File file = new File(path);
 
         try {
@@ -48,12 +48,10 @@ public class FileUtil {
 
             fw.write(data);
             fw.close();
-            return true;
         } catch (IOException e) {
             e.printStackTrace();
         }
 
-        return false;
     }
 
     //得到玩家数据file

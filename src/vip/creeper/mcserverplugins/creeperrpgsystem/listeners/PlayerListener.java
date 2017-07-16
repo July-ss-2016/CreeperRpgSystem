@@ -8,7 +8,6 @@ import org.bukkit.event.player.PlayerCommandPreprocessEvent;
 import org.bukkit.event.player.PlayerJoinEvent;
 import org.bukkit.event.player.PlayerQuitEvent;
 import org.bukkit.event.player.PlayerRespawnEvent;
-import org.bukkit.plugin.java.JavaPlugin;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Settings;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.RpgPlayerManager;
@@ -20,7 +19,8 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
  * Created by July_ on 2017/7/15.
  */
 public class PlayerListener implements Listener {
-    private static JavaPlugin plugin = CreeperRpgSystem.getInstance();
+    private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
+    private static Settings settings = plugin.getSettings();
 
 
     @EventHandler
@@ -28,7 +28,7 @@ public class PlayerListener implements Listener {
         Player player = event.getPlayer();
 
         Bukkit.getScheduler().runTask(plugin, () -> {
-            Util.teleportToSpawnPoint(player);
+            Util.teleportToServerSpawnPoint(player);
             RpgPlayerManager.registerRpgPlayer(player);
         });
 
@@ -51,7 +51,7 @@ public class PlayerListener implements Listener {
             Bukkit.getScheduler().runTask(plugin, new Runnable() {
                 @Override
                 public void run() {
-                    Util.teleportToSpawnPoint(player);
+                    Util.teleportToServerSpawnPoint(player);
                 }
             });
 
@@ -69,7 +69,7 @@ public class PlayerListener implements Listener {
             return;
         }
 
-        for (String cmd : Settings.stageWhitelistCommands) {
+        for (String cmd : settings.stageWhitelistCommands) {
             if (msg.startsWith(cmd)) {
                 return;
             }

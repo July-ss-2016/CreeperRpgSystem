@@ -12,7 +12,6 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 public class InventoryCommand implements CommandImpl {
 
 
-    @Override
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
 
         if (args.length == 2 && args[1].equalsIgnoreCase("closeself")) {

@@ -14,7 +14,6 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 public class MarketCommand implements CommandImpl {
 
 
-    @Override
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
         String marketCode = args[2];
 

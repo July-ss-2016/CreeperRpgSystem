@@ -15,14 +15,13 @@ public class PlaceHolderApiExpansion extends EZPlaceholderHook {
         super(plugin, "crs");
     }
 
-    @Override
+    //请求事件
     public String onPlaceholderRequest(Player player, String str) {
         String playerName = player.getName();
 
         //前缀过滤，排除其他插件
         if (str.startsWith("stage_state_")) {
             String stageCode = str.replace("stage_state_", "");
-
             Stage stage = StageManager.getStage(stageCode);
 
             if (stage.isFreeStage()) {

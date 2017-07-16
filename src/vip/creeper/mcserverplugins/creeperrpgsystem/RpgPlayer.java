@@ -17,6 +17,7 @@ public class RpgPlayer {
     private File playerDataFile;
     private YamlConfiguration playerDataYml;
 
+
     public RpgPlayer(Player bukkitPlayer, File playerDataFile) {
         this.bukkitPlayer = bukkitPlayer;
         this.playerDataFile = playerDataFile;
@@ -30,10 +31,12 @@ public class RpgPlayer {
         this.playerDataYml = YamlConfiguration.loadConfiguration(playerDataFile);
     }
 
+    //得到Bukkit玩家
     public Player getBukkitPlayer() {
         return this.bukkitPlayer;
     }
 
+    //得到玩家关卡解锁状态
     public boolean getStageState(String stageCode) {
         return this.getPassedStages().contains(stageCode);
     }
@@ -56,12 +59,10 @@ public class RpgPlayer {
         }
 
         if (state) {
-
             //禁止重复
             if (temp.contains(stageCode)) {
                 return false;
             }
-
             temp.add(stageCode);
         } else {
             temp.remove(stageCode);

@@ -14,20 +14,24 @@ public class RpgPlayerManager {
     private static HashMap<String, RpgPlayer> rpgPlayers = new HashMap<>();
 
 
+    //注册rpg玩家
     public static void registerRpgPlayer(Player player) {
         File file = FileUtil.getPlayerDataFile(player.getName());
         rpgPlayers.put(player.getName(), new RpgPlayer(player, file));
     }
 
+    //得到rpg玩家
     public static RpgPlayer getRpgPlayer(String playerName) {
         return rpgPlayers.get(playerName);
     }
 
+    //注销某个rpg玩家
     public static void unregisterPlayer(Player player) {
         rpgPlayers.remove(player.getName());
     }
 
-    public static void unreigsterAllPlayers() {
+    //注销所有rpg玩家
+    public static void unreigsterAllRpgPlayers() {
         rpgPlayers.clear();
     }
 }

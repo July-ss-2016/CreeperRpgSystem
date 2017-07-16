@@ -51,7 +51,7 @@ public class MarketListener implements Listener {
         }
     }
 
-    //禁止攻击马
+    //事件_攻击马
     @EventHandler
     public void onDamageHorseEvent(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
@@ -69,7 +69,7 @@ public class MarketListener implements Listener {
 
     }
 
-    //下马清
+    //事件_下马
     @EventHandler
     public void onPlayerLeaveHorseEvent(VehicleExitEvent event) {
         Entity entity = event.getExited();
@@ -85,7 +85,7 @@ public class MarketListener implements Listener {
         }
     }
 
-    //禁止把鞍拿走
+    //事件_点击马背包
     @EventHandler
     public void onInvClickEvent(InventoryClickEvent event) {
         Player player = (Player)event.getWhoClicked();

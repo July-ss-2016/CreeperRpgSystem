@@ -11,7 +11,7 @@ import java.util.Map;
 public class StageMobKillingCounter {
     private Player player;
     private Stage stage;
-    private int totalChallengeCount = 0;
+    private int totalChallengeCount;
     private static HashMap<String, Integer> counter ;
 
 
@@ -19,46 +19,47 @@ public class StageMobKillingCounter {
         this.player = player;
         this.stage = stage;
 
+        this.totalChallengeCount = 0;
+
         for (Map.Entry<String, Integer> entry : stage.getChallenges().entrySet()) {
             totalChallengeCount += entry.getValue();
         }
 
-        counter = new HashMap<String, Integer>();
+        counter = new HashMap<>();
     }
 
+    public Player getPlayer() {
+        return this.player;
+    }
+
+    //添加次数
     public void addCount(String mobName) {
         int current = counter.getOrDefault(mobName, 0);
 
         counter.put(mobName, current + 1);
     }
 
+    //得到次数
     public int getCount(String mobName) {
         return counter.getOrDefault(mobName, 0);
     }
 
+    //重置次数
+    public void resetCount() {
+        resetCount();
+    }
+
+    //重置次数
     public void resetCount(String mobName) {
         counter.remove(mobName);
     }
 
+    //得到关卡
     public Stage getStage() {
         return this.stage;
     }
 
-    //检查当前关卡任务是否已完成
-    public boolean isFinishedChallenge() {
-        for (Map.Entry<String, Integer> entry : stage.getChallenges().entrySet()) {
-            String key = entry.getKey();
-            int value = entry.getValue();
-
-            //目标数 - 已杀数
-            if (!counter.containsKey(key) || value - counter.get(key) > 0) {
-                return false;
-            }
-        }
-        return true;
-    }
-
-    //任务完成比(总)
+    //任务完成比(总) 1为完成
     public double getTotalFinishingPercent() {
         //玩家真实杀怪总数，不会溢出
         int playerRealTotalMobKillingCount = 0;
@@ -82,6 +83,7 @@ public class StageMobKillingCounter {
 
         return ((double)killingCount / (double)challengeCount);
     }
+
     //单个怪物目标击杀数
     public int getChallengeCount(String mobName) {
         return this.stage.getChallenges().get(mobName);

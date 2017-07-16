@@ -28,6 +28,7 @@ public class CreeperRpgSystem extends JavaPlugin {
     private boolean firstLoad = true;
     private final PluginManager PLUGIN_MANAGER = Bukkit.getPluginManager();
     private static CreeperRpgSystem instance;
+    private static Settings settings;
 
     public void onLoad() {
         //阻止实例发生改变导致FileUtil出错
@@ -43,6 +44,8 @@ public class CreeperRpgSystem extends JavaPlugin {
     }
 
     public void onEnable() {
+        settings = new Settings();
+
         MsgUtil.info("版本 = " + PLUGIN_MANAGER.getPlugin("CreeperRpgSystem").getDescription().getVersion());
         MsgUtil.info("创建时间 = " + new SimpleDateFormat("yyyy/MM/dd HH:mm:ss").format(Util.getPluginCreationDate()));
 
@@ -72,7 +75,10 @@ public class CreeperRpgSystem extends JavaPlugin {
         getLogger().info("插件已被卸载.");
     }
 
-    //提供公开方法以获得主类实例
+    public Settings getSettings() {
+        return this.settings;
+    }
+
     public static CreeperRpgSystem getInstance() {
         return instance;
     }
@@ -101,6 +107,7 @@ public class CreeperRpgSystem extends JavaPlugin {
         ConfigManager.registerConfig(ConfigType.CONFIG_STAGE, new StageConfig());
     }
 
+    //初始化测试类
     private void initTest() {
         PLUGIN_MANAGER.registerEvents(new ListenerTest(), this);
     }

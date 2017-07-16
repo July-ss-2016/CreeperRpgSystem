@@ -20,7 +20,6 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 public class ConfigCommand implements CommandImpl {
 
 
-    @Override
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
         if (!cs.hasPermission("crs.admin")) {
             MsgUtil.sendMsg(cs, "&c没有权限: crs.admin.");
@@ -50,7 +49,7 @@ public class ConfigCommand implements CommandImpl {
                         return true;
                     case "market":
                         Market market = MarketManager.getMarketByMarketCode(args[3]);
-                        boolean marketSpawnLocSetResult = market.setSpawnLoc(player.getLocation());
+                        boolean marketSpawnLocSetResult = market.setSpawnLocation(player.getLocation());
 
                         if (marketSpawnLocSetResult) {
                             ConfigManager.loadConfig(ConfigType.CONFIG_MARKET);

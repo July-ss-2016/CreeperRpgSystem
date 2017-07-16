@@ -83,7 +83,7 @@ public class StageListener implements Listener {
         String mobCode = mythicMob.getInternalName();
 
         if (!playerStageMobCounters.containsKey(playerName)) {
-            Util.teleportToSpawnPoint(player);
+            Util.teleportToServerSpawnPoint(player);
             MsgUtil.sendMsg(player, "&c怪物计数器不存在!");
             return;
         }
@@ -129,7 +129,7 @@ public class StageListener implements Listener {
         playerStageMobCounters.remove(playerName);
         stage.performFinishedRewardCommands(bukkitPlayer);
         giveFinishedRewardKitResult = stage.giveFinishedRewardItems(bukkitPlayer);
-        MsgUtil.sendBroaddcastMsg("&d玩家 &b" + playerName + " &d成功通过了关卡 &b" + stageCode + "&d !");
+        MsgUtil.sendBroadcastMsg("&d玩家 &b" + playerName + " &d成功通过了关卡 &b" + stageCode + "&d !");
         MsgUtil.sendTitle(bukkitPlayer, "&d任务完成");
 
         if (giveFinishedRewardKitResult) {
@@ -139,7 +139,7 @@ public class StageListener implements Listener {
         }
 
         MsgUtil.sendMsg(bukkitPlayer, "&e5秒后 你将被传送到主城.");
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToSpawnPoint(bukkitPlayer)), 100L);
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToServerSpawnPoint(bukkitPlayer)), 100L);
         return;
     }
 
