@@ -4,11 +4,11 @@ import io.lumine.xikage.mythicmobs.adapters.bukkit.BukkitAdapter;
 import io.lumine.xikage.mythicmobs.items.MythicItem;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
-import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageEnterEvent;
+import vip.creeper.mcserverplugins.creeperrpgsystem.managers.RpgPlayerManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.ConfigUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
@@ -57,6 +57,11 @@ public class Stage {
         return this.stageCode;
     }
 
+    //得到完成任务奖励的物品
+    public HashMap<Optional<MythicItem>, Integer> getFinishedRewardItems() {
+        return this.finishedRewardItems;
+    }
+
     //得到任务
     public HashMap<String, Integer> getChallenges() {
         return this.challenges;
@@ -79,14 +84,7 @@ public class Stage {
 
     //得到玩家关卡解锁状态
     public boolean getPlayerStageState(String playerName) {
-        File file = FileUtil.getPlayerDataFile(playerName);
-
-        if (!file.exists()) {
-            return false;
-        }
-
-        YamlConfiguration yml = YamlConfiguration.loadConfiguration(file);
-        return yml.getStringList("stage.passed_stages").contains(stageCode);
+        return RpgPlayerManager.getRpgPlayer(playerName).getStageState(this.stageCode);
     }
 
     //关卡传送
@@ -104,7 +102,7 @@ public class Stage {
             MsgUtil.sendReplacedVarMsg(player, confirmMessage);
         }
 
-        MsgUtil.sendRawMsg(player, "[\"\",{\"text\":\"\"},{\"text\":\"                                      『点我进入关卡』 \",\"color\":\"light_purple\",\"bold\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/crs stage tp " + stageCode + "\"}}]");
+        MsgUtil.sendRawMsg(player, "[\"\",{\"text\":\"\"},{\"text\":\"                                                 『点我进入关卡』 \",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/crs stage tp " + stageCode + "\"}}]");
         MsgUtil.sendReplacedVarMsg(player, "");
     }
 
@@ -120,9 +118,9 @@ public class Stage {
     }
 
     //执行完成任务的命令
-    public void performFinishedRewardCommands(Player player) {
+    public void performFinishedRewardCommands(final Player player) {
         for (String cmd : this.finishedRewardCommands) {
-            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MsgUtil.replacePlayerVariable(cmd, player));
+            Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MsgUtil.getReplacedVariableMsg(cmd, player));
         }
     }
 
@@ -146,5 +144,4 @@ public class Stage {
         }
         return true;
     }
-
 }

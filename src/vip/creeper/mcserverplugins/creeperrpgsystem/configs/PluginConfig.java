@@ -18,7 +18,7 @@ import java.io.File;
  */
 public class PluginConfig implements ConfigImpl {
     private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
-    private static  Settings settings =  plugin.getSettings();
+    private static Settings settings =  plugin.getSettings();
 
 
     public void loadConfig() {
@@ -31,6 +31,7 @@ public class PluginConfig implements ConfigImpl {
             settings.serverSpawnLocation = new Location(Bukkit.getWorld(spawnLocSection.getString("world")), spawnLocSection.getDouble("x"), spawnLocSection.getDouble("y"), spawnLocSection.getDouble("z"),
                     Float.parseFloat(spawnLocSection.getString("yaw")), Float.parseFloat(spawnLocSection.getString("pitch")));
             settings.stageWhitelistCommands = rootYml.getStringList("stage_whitelist_commands");
+            settings.firstJoinItems = rootYml.getStringList("first_join_items");
             MsgUtil.info("插件配置已载入.");
         });
     }

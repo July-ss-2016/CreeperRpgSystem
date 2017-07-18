@@ -16,7 +16,7 @@ public class CommandExecutor implements org.bukkit.command.CommandExecutor {
 
     public boolean onCommand(CommandSender cs, Command cmd, String lable, String[] args) {
         if (args.length >= 1) {
-            String firstArg = args[0];
+            String firstArg = args[0].toLowerCase();
 
             if (commands.containsKey(firstArg)) {
                 commands.get(firstArg).execute(cs, cmd, lable, args);
@@ -30,6 +30,6 @@ public class CommandExecutor implements org.bukkit.command.CommandExecutor {
     }
 
     public void registerCommand(String firstArg, CommandImpl cmd) {
-        commands.put(firstArg, cmd);
+        commands.put(firstArg.toLowerCase(), cmd);
     }
 }

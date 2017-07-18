@@ -8,19 +8,48 @@ stages:
       yaw: -219.50006
       pitch: 4.6000004
     free_stage: true
-    #mythicmobs mobs
     challenges:
-    - 'MOB_A0:10'
+    - MOB_A0:10
     confirm_messages:
     - ''
-    - "&e你即将挑战副本关卡,请仔细阅读以下信息,准备好了请点击按钮进入~"
-    - "&f关卡代码 &b: &fSTAGE_AO"
-    - "&f难度系数 &b: &f0.5"
-    - "&f击杀要求 &b: &f初级僵尸 &b> &f10"
-    - "&f通关奖励 &b: &f解锁关卡 &b> &fA1   &f御灵碎片 &b> &f8"
-    #mythicmobs items
+    - "&d\u4f60\u5373\u5c06\u6311\u6218\u526f\u672c\u5173\u5361,\u8bf7\u4ed4\u7ec6\
+      \u9605\u8bfb\u4ee5\u4e0b\u4fe1\u606f,\u51c6\u5907\u597d\u4e86\u8bf7\u70b9\u51fb\
+      \u6309\u94ae\u8fdb\u5165~"
+    - "&f\u5173\u5361\u4ee3\u7801 &b: &fSTAGE_AO"
+    - "&f\u96be\u5ea6\u7cfb\u6570 &b: &f0.5"
+    - "&f\u51fb\u6740\u8981\u6c42 &b: &f\u521d\u7ea7\u50f5\u5c38 &b> &f10"
+    - "&f\u901a\u5173\u5956\u52b1 &b: &f\u89e3\u9501\u5173\u5361 &b> &fSTAGE_A1  &f\u5fa1\
+      \u7075\u788e\u7247 &b> &f1"
     finished_reward_commands: {}
     finished_reward_items:
-    - 'REWARD_A0:5'
+    - REWARD_A0:1
     finished_deblocking_stages:
-    - 'STAGE_A1'
+    - STAGE_A1
+  STAGE_A1:
+    spawn_loc:
+      world: w_instance_0
+      x: 1610.699999988079
+      y: 78.0
+      z: -865.6999999880791
+      yaw: -315.3506
+      pitch: 36.699955
+    challenges:
+    - MOB_A0:5
+    - MOB_A1:5
+    confirm_messages:
+    - ''
+    - "&d\u4f60\u5373\u5c06\u6311\u6218\u526f\u672c\u5173\u5361,\u8bf7\u4ed4\u7ec6\
+      \u9605\u8bfb\u4ee5\u4e0b\u4fe1\u606f,\u51c6\u5907\u597d\u4e86\u8bf7\u70b9\u51fb\
+      \u6309\u94ae\u8fdb\u5165~"
+    - "&f\u5173\u5361\u4ee3\u7801 &b: &fSTAGE_AO"
+    - "&f\u96be\u5ea6\u7cfb\u6570 &b: &f0.7"
+    - "&f\u51fb\u6740\u8981\u6c42 &b: &f\u521d\u7ea7\u50f5\u5c38 &b> &f5  &f\u517b\
+      \u7531\u57fa &b> &f5"
+    - "&f\u901a\u5173\u5956\u52b1 &b: &f\u89e3\u9501\u5173\u5361 &b> &fSTAGE_A2  &f\u4e0a\
+      \u53e4\u4e4b\u77f3 &b> &f2  &f������Ƭ &b> &f1"
+    finished_reward_commands: {}
+    finished_reward_items:
+    - REWARD_A0:1
+    - REWARD_A1:1
+    finished_deblocking_stages:
+    - STAGE_A2

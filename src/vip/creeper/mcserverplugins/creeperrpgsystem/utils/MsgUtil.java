@@ -18,7 +18,7 @@ public class MsgUtil {
     public static final String HEAD_MSG = "§a[CreeperRpgSystem] §b";
     public static final String LINE_SEPARATOR = System.getProperty("line.separator");
     private static final JavaPlugin plugin = CreeperRpgSystem.getInstance();
-    private static final Logger logger = Logger.getLogger("Minecraft");
+    private static final Logger logger = plugin.getLogger();
     private static final com.sn1cko.actionbar.actionbar actionBar = (com.sn1cko.actionbar.actionbar) Bukkit.getPluginManager().getPlugin("Actionbar");
 
 
@@ -32,8 +32,9 @@ public class MsgUtil {
         cs.sendMessage(HEAD_MSG + translateColorMsg(msg));
     }
 
+    //发送替换过变量后的信息
     public static void sendReplacedVarMsg(final CommandSender cs, final String msg) {
-        cs.sendMessage(translateColorMsg(msg).replace("%head_msg%", HEAD_MSG).replace("%player_name", cs.getName()));
+        cs.sendMessage(translateColorMsg(getReplacedVariableMsg(msg, cs)));
     }
 
     //翻译彩色代码
@@ -73,5 +74,10 @@ public class MsgUtil {
     //发送广播消息
     public static void sendBroadcastMsg(String msg) {
         Bukkit.getServer().broadcastMessage(HEAD_MSG + ChatColor.translateAlternateColorCodes('&', msg));
+    }
+
+    //得到替换过变量后的msg
+    public static String getReplacedVariableMsg(String msg, CommandSender cs) {
+        return msg.replace("%head_msg%", HEAD_MSG).replace("%player_name", cs.getName());
     }
 }

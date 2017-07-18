@@ -47,7 +47,13 @@ public class MarketListener implements Listener {
             horse.setTamed(true); // 设置为驯服状态
             horse.setColor(Horse.Color.BLACK);
             horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
-            Bukkit.getScheduler().runTaskLater(plugin, () -> horse.setPassenger(player), 10L);
+
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
+                @Override
+                public void run() {
+                    Bukkit.getScheduler().runTask(plugin, () -> horse.setPassenger(player));
+                }
+            }, 20L);
         }
     }
 

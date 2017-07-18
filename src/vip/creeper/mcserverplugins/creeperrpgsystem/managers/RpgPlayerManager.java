@@ -14,14 +14,12 @@ public class RpgPlayerManager {
     private static HashMap<String, RpgPlayer> rpgPlayers = new HashMap<>();
 
 
-    //注册rpg玩家
-    public static void registerRpgPlayer(Player player) {
-        File file = FileUtil.getPlayerDataFile(player.getName());
-        rpgPlayers.put(player.getName(), new RpgPlayer(player, file));
-    }
-
     //得到rpg玩家
     public static RpgPlayer getRpgPlayer(String playerName) {
+        if (!rpgPlayers.containsKey(playerName)) {
+            File file = FileUtil.getPlayerDataFile(playerName);
+            rpgPlayers.put(playerName, new RpgPlayer(playerName, file));
+        }
         return rpgPlayers.get(playerName);
     }
 
@@ -31,7 +29,7 @@ public class RpgPlayerManager {
     }
 
     //注销所有rpg玩家
-    public static void unreigsterAllRpgPlayers() {
+    public static void unreigsterAll() {
         rpgPlayers.clear();
     }
 }

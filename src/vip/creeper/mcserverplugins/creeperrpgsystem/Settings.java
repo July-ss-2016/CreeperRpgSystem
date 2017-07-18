@@ -11,6 +11,11 @@ public class Settings {
     public Location serverSpawnLocation;
     public String configVersion;
     public List<String> stageWhitelistCommands;
+    public List<String> firstJoinItems;
+
+    public void setFirstJoinItems(List<String> firstJoinItems) {
+        this.firstJoinItems = firstJoinItems;
+    }
 
     public void setServerSpawnLocation(Location loc) {
         this.serverSpawnLocation = loc;
@@ -34,5 +39,9 @@ public class Settings {
 
     public List<String> getStageWhitelistCommands() {
         return this.stageWhitelistCommands;
+    }
+
+    public List<String> getFirstJoinItems() {
+        return this.firstJoinItems;
     }
 }

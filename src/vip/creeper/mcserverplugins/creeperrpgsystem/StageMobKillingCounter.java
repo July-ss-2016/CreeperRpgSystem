@@ -3,6 +3,7 @@ package vip.creeper.mcserverplugins.creeperrpgsystem;
 import org.bukkit.entity.Player;
 
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.Map;
 
 /**
@@ -76,6 +77,11 @@ public class StageMobKillingCounter {
         return ((double)playerRealTotalMobKillingCount / (this.totalChallengeCount));
     }
 
+    //单个怪物击杀数
+    public int getSingleMobKillingCount(String mobName) {
+        return counter.get(mobName);
+    }
+
     //单个怪物击杀完成比 0.x
     public double getSingleMobFinishingPercent(String mobName) {
         int killingCount = getCount(mobName);
@@ -87,5 +93,20 @@ public class StageMobKillingCounter {
     //单个怪物目标击杀数
     public int getChallengeCount(String mobName) {
         return this.stage.getChallenges().get(mobName);
+    }
+
+    public String getFirstNeedKillMobName() {
+        Iterator iter = stage.getChallenges().entrySet().iterator();
+
+        while (iter.hasNext()) {
+            Map.Entry<String, Integer> entry = (Map.Entry<String, Integer>) iter.next();
+            String mobName = entry.getKey();
+            int challengeCount = entry.getValue();
+
+            if (getSingleMobKillingCount(mobName) < challengeCount) {
+                return mobName;
+            }
+        }
+        return null;
     }
 }

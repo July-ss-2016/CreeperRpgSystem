@@ -11,15 +11,12 @@ import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDeathEvent;
 import org.bukkit.event.player.PlayerChangedWorldEvent;
-import org.bukkit.plugin.java.JavaPlugin;
+import org.bukkit.event.player.PlayerRespawnEvent;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.RpgPlayer;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
 import vip.creeper.mcserverplugins.creeperrpgsystem.StageMobKillingCounter;
-import vip.creeper.mcserverplugins.creeperrpgsystem.events.RpgMobKilledByPlayerEvent;
-import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageEnterEvent;
-import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageFinishedEvent;
-import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageLeaveEvent;
+import vip.creeper.mcserverplugins.creeperrpgsystem.events.*;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.RpgPlayerManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
@@ -31,40 +28,11 @@ import java.util.HashMap;
  * Created by July_ on 2017/7/7.
  */
 public class StageListener implements Listener {
-    private JavaPlugin plugin = CreeperRpgSystem.getInstance();
+    private CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
     private BukkitAPIHelper mythicMobApi = MythicMobs.inst().getAPIHelper();
     private HashMap<String, StageMobKillingCounter> playerStageMobCounters = new HashMap<String, StageMobKillingCounter>();    //玩家名对应怪物单关卡击杀数统计器
 
 
-    //_触发事件_关卡怪物死亡
-    @EventHandler
-    public void onEntityDeathEvent(EntityDeathEvent event) {
-        LivingEntity target = event.getEntity();
-        Entity killer = target.getKiller();
-
-        if (killer == null) {
-            return;
-        }
-
-        Player player = (Player)killer;
-        String playerName = player.getName();
-
-        if (mythicMobApi.isMythicMob(target)) {
-            //触发专用事件
-            Bukkit.getPluginManager().callEvent(new RpgMobKilledByPlayerEvent(player, mythicMobApi.getMythicMobInstance(target).getType()));
-        }
-    }
-
-    //_触发事件_离开关卡_切换世界
-    @EventHandler
-    public void onPlayerChangeWorldEvent(PlayerChangedWorldEvent event) {
-        Player player = event.getPlayer();
-        String playerName = player.getName();
-
-        if (StageManager.isStageWorld(event.getFrom().getName()) && playerStageMobCounters.containsKey(playerName)) {
-            Bukkit.getPluginManager().callEvent(new StageLeaveEvent(player, playerStageMobCounters.get(playerName).getStage()));
-        }
-    }
 
     //事件_RPG怪物被击杀
     @EventHandler
@@ -72,13 +40,6 @@ public class StageListener implements Listener {
         Player player = event.getKiller();
         String playerName = player.getName();
         MythicMob mythicMob = event.getMythicMob();
-
-        //这个也没必要
-        /*
-        if (!StageManager.isStageWorld(player.getWorld().getName())) {
-            return;
-        }
-        */
 
         String mobCode = mythicMob.getInternalName();
 
@@ -110,6 +71,15 @@ public class StageListener implements Listener {
         //完成任务，触发事件，让事件去处理
         if (totalFinishingPercent == 1) {
             Bukkit.getPluginManager().callEvent(new StageFinishedEvent(RpgPlayerManager.getRpgPlayer(playerName), stage));
+        } else {
+            //提示需要下一个攻击的目标
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> {
+                String firstNeedKillMobName = smk.getFirstNeedKillMobName();
+
+                if (firstNeedKillMobName != null) {
+                    MsgUtil.sendSubTitle(player, "&c目标 &b> &c" + mythicMobApi.getMythicMob(firstNeedKillMobName).getDisplayName());
+                }
+            }), 30L); //1.5s
         }
     }
 
@@ -117,29 +87,46 @@ public class StageListener implements Listener {
     @EventHandler
     public void onStageFinishedEvent(StageFinishedEvent event) {
         RpgPlayer rpgPlayer = event.getRpgPlayer();
-        Player bukkitPlayer = rpgPlayer.getBukkitPlayer();
+        Player bukkitPlayer = rpgPlayer.getPlayer();
         String playerName = bukkitPlayer.getName();
         Stage stage = event.getStage();
         String stageCode = stage.getStageCode();
-        boolean giveFinishedRewardKitResult = false;
+        boolean giveFinishedRewardKitResult;
 
-        //设置通关印记
-        rpgPlayer.setStageState(stageCode, true);
+        //解锁关卡
+        for (String deblockingStage : stage.getFinishedDeblockingStages()) {
+            if (!rpgPlayer.getStageState(deblockingStage)) {
+
+                if (rpgPlayer.setStageState(deblockingStage, true)) {
+                    MsgUtil.sendBroadcastMsg("&d玩家 &b" + playerName + " &d解锁了关卡 &b" + deblockingStage + "&d !");
+                } else {
+                    MsgUtil.sendMsg(bukkitPlayer, "§c解锁关卡失败!原因:系统错误.");
+                }
+
+            }
+        }
+
         Util.spawnFirework(bukkitPlayer.getLocation());
         playerStageMobCounters.remove(playerName);
         stage.performFinishedRewardCommands(bukkitPlayer);
         giveFinishedRewardKitResult = stage.giveFinishedRewardItems(bukkitPlayer);
-        MsgUtil.sendBroadcastMsg("&d玩家 &b" + playerName + " &d成功通过了关卡 &b" + stageCode + "&d !");
+        //MsgUtil.sendBroadcastMsg("&d玩家 &b" + playerName + " &d成功通过了关卡 &b" + stageCode + "&d !");
         MsgUtil.sendTitle(bukkitPlayer, "&d任务完成");
 
         if (giveFinishedRewardKitResult) {
-            MsgUtil.sendMsg(bukkitPlayer, "&d任务奖励成功发放!");
+            MsgUtil.sendMsg(bukkitPlayer, "&d已获得任务奖励!");
         } else {
             MsgUtil.sendMsg(bukkitPlayer, "&d任务奖励发放失败!原因:背包空间不足,StageCode=" + stageCode + ".");
         }
 
-        MsgUtil.sendMsg(bukkitPlayer, "&e5秒后 你将被传送到主城.");
-        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToServerSpawnPoint(bukkitPlayer)), 100L);
+        bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth());
+        bukkitPlayer.setNoDamageTicks(200);
+        MsgUtil.sendMsg(bukkitPlayer, "&e8秒后 你将被传送到主城.");
+
+
+        Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
+            Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToServerSpawnPoint(bukkitPlayer));
+        }, 160L);
         return;
     }
 
@@ -152,10 +139,71 @@ public class StageListener implements Listener {
 
         //不含key，或含key但关卡已变
         if (!playerStageMobCounters.containsKey(playerName) || playerStageMobCounters.containsKey(playerName) && !playerStageMobCounters.get(playerName).getStage().getStageCode().equals(stage.getStageCode())) {
-            MsgUtil.warring("c");
+            //存储计数器
             playerStageMobCounters.put(playerName, new StageMobKillingCounter(player, stage));
         }
 
         MsgUtil.sendTitle(player, "&c开始作战");
     }
+
+    //事件_关卡死亡重生
+    @EventHandler
+    public void onStagePlayerRespawnEvent(StagePlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        Stage stage = event.getStage();
+
+        //MsgUtil.sendMsg(player, "&e关卡进度已保留.");
+
+        Bukkit.getScheduler().runTask(plugin, () -> {
+            MsgUtil.sendRawMsg(player, "[\"\",{\"text\":\"" + MsgUtil.HEAD_MSG + "§e" + "『点我返回关卡』\",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/crs stage tp " + stage.getStageCode() + "\"}}]");;
+        });
+    }
+
+
+    //_含触发事件_StagePlayerDeathEvent
+    @EventHandler
+    public void onPlayerRespawnEvent(PlayerRespawnEvent event) {
+        Player player = event.getPlayer();
+        String playerName = player.getName();
+
+        if (!StageManager.isStageWorld(player.getWorld().getName())) {
+            return;
+        }
+
+        Bukkit.getScheduler().runTask(plugin, (Runnable) () -> Util.teleportToServerSpawnPoint(player));
+
+        if (playerStageMobCounters.containsKey(playerName)) {
+            Bukkit.getPluginManager().callEvent(new StagePlayerRespawnEvent(player, playerStageMobCounters.get(playerName).getStage()));
+        }
+    }
+
+    //_含触发事件_StageMobKilledByPlayerEvent
+    @EventHandler
+    public void onEntityDeathEvent(EntityDeathEvent event) {
+        LivingEntity target = event.getEntity();
+        Entity killer = target.getKiller();
+
+        if (killer == null) {
+            return;
+        }
+
+        Player player = (Player)killer;
+
+        if (mythicMobApi.isMythicMob(target) && StageManager.isStageWorld(player.getWorld().getName())) {
+            //触发专用事件
+            Bukkit.getPluginManager().callEvent(new RpgMobKilledByPlayerEvent(player, mythicMobApi.getMythicMobInstance(target).getType()));
+        }
+    }
+
+    //_含触发事件_StageLeaveEvent
+    @EventHandler
+    public void onPlayerChangeWorldEvent(PlayerChangedWorldEvent event) {
+        Player player = event.getPlayer();
+        String playerName = player.getName();
+
+        if (StageManager.isStageWorld(event.getFrom().getName()) && playerStageMobCounters.containsKey(playerName)) {
+            Bukkit.getPluginManager().callEvent(new StageLeaveEvent(player, playerStageMobCounters.get(playerName).getStage()));
+        }
+    }
+
 }

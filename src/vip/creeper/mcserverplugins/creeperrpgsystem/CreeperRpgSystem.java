@@ -1,7 +1,6 @@
 package vip.creeper.mcserverplugins.creeperrpgsystem;
 
 import org.bukkit.Bukkit;
-import org.bukkit.entity.Player;
 import org.bukkit.plugin.PluginManager;
 import org.bukkit.plugin.java.JavaPlugin;
 import vip.creeper.mcserverplugins.creeperrpgsystem.commands.*;
@@ -37,10 +36,7 @@ public class CreeperRpgSystem extends JavaPlugin {
         }
 
         MsgUtil.info("插件被重载!");
-
-        for (Player player : Bukkit.getOnlinePlayers()) {
-            RpgPlayerManager.registerRpgPlayer(player);
-        }
+        RpgPlayerManager.unreigsterAll();
     }
 
     public void onEnable() {
@@ -88,7 +84,7 @@ public class CreeperRpgSystem extends JavaPlugin {
 
         commandExecutor.registerCommand("market", new MarketCommand());
         commandExecutor.registerCommand("reload", new ReloadCommand());
-        commandExecutor.registerCommand("op", new OpCommand());
+        //commandExecutor.registerCommand("op", new OpCommand());
         commandExecutor.registerCommand("cfg", new ConfigCommand());
         commandExecutor.registerCommand("stage", new StageCommand());
         commandExecutor.registerCommand("inv", new InventoryCommand());

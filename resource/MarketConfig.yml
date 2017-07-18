@@ -7,6 +7,6 @@ markets:
       z: 323.0226793472376
       yaw: 179.24593
       pitch: -16.09415
-    display_name: 'æ·˜ç‰©åŸ'
-    welcome_msg: '%head_msg%æ¬¢è¿æ¥åˆ°æ·˜ç‰©åŸ,åœ¨è¿™é‡Œä½ èƒ½ä¹°åˆ°è®¸å¤šå¼ºå¤§çš„è£…å¤‡~'
+    display_name: 'ÌÔÎï³Ç'
+    welcome_msg: '%head_msg%»¶Ó­À´µ½ÌÔÎï³Ç,ÔÚÕâÀïÄãÄÜÂòµ½Ğí¶àÇ¿´óµÄ×°±¸~'
     enter_give_horse: true

@@ -65,7 +65,7 @@ public class StageConfig implements ConfigImpl {
                 //注册关卡
                 StageManager.registerStage(new Stage(key, new Location(Bukkit.getWorld(stageSpawnLocSection.getString("world")), stageSpawnLocSection.getDouble("x"), stageSpawnLocSection.getDouble("y"),
                         stageSpawnLocSection.getDouble("z"), Float.parseFloat(stageSpawnLocSection.getString("yaw")), Float.parseFloat(stageSpawnLocSection.getString("pitch"))), stageSection.getBoolean("free_stage"), stageChallenges, stageSection.getStringList("confirm_messages"),
-                        stageSection.getStringList("finishing_deblocking_stages"), stageSection.getStringList("finished_reward_commands"), stageFinishedRewardItems));
+                        stageSection.getStringList("finished_deblocking_stages"), stageSection.getStringList("finished_reward_commands"), stageFinishedRewardItems));
                 MsgUtil.info("关卡 = " + key + " 被载入.");
             }
         });
