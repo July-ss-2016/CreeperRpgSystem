@@ -132,6 +132,10 @@ public class Stage {
 
     // 给予完成任务奖励的物品
     public boolean giveFinishedRewardItems(Player player) {
+        if (isNoFinishedRewardItem()) {
+            return true;
+        }
+
         PlayerInventory playerInventory = player.getInventory();
         Iterator iter = finishedRewardItems.entrySet().iterator();
 
@@ -149,5 +153,9 @@ public class Stage {
             }
         }
         return true;
+    }
+
+    public boolean isNoFinishedRewardItem() {
+        return this.finishedRewardItems == null;
     }
 }

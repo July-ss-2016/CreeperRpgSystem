@@ -30,11 +30,11 @@ import java.util.HashMap;
 public class StageListener implements Listener {
     private CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
     private BukkitAPIHelper mythicMobApi = MythicMobs.inst().getAPIHelper();
-    private HashMap<String, StageMobKillingCounter> playerStageMobCounters = new HashMap<String, StageMobKillingCounter>();    // 玩家名对应怪物单关卡击杀数统计器
+    private HashMap<String, StageMobKillingCounter> playerStageMobCounters = new HashMap<String, StageMobKillingCounter>(); // 玩家名对应怪物单关卡击杀数统计器
 
 
 
-    //  事件_RPG怪物被击杀
+    // 事件_RPG怪物被击杀
     @EventHandler
     public void onRpgMobKilledByPlayerEvent(RpgMobKilledByPlayerEvent event) {
         Player player = event.getKiller();
@@ -90,7 +90,7 @@ public class StageListener implements Listener {
         }
     }
 
-    //  事件_完成任务
+    // 事件_完成任务
     @EventHandler
     public void onStageFinishedEvent(StageFinishedEvent event) {
         RpgPlayer rpgPlayer = event.getRpgPlayer();
@@ -113,28 +113,29 @@ public class StageListener implements Listener {
             }
         }
 
-        Util.spawnFirework(bukkitPlayer.getLocation());
-        //  清空次数
-        playerStageMobCounters.get(playerName).resetCounts();
-        stage.performFinishedRewardCommands(bukkitPlayer);
-        giveFinishedRewardKitResult = stage.giveFinishedRewardItems(bukkitPlayer);
-        //  MsgUtil.sendBroadcastMsg("&d玩家 &b" + playerName + " &d成功通过了关卡 &b" + stageCode + "&d !");
-        MsgUtil.sendTitle(bukkitPlayer, "&d任务完成");
+        Util.spawnFirework(bukkitPlayer.getLocation()); // 释放烟花
+        playerStageMobCounters.get(playerName).resetCounts(); //清空次数
+        stage.performFinishedRewardCommands(bukkitPlayer); // 执行指令
 
-        if (giveFinishedRewardKitResult) {
-            MsgUtil.sendMsg(bukkitPlayer, "&d已获得任务奖励!");
-        } else {
-            MsgUtil.sendMsg(bukkitPlayer, "&d任务奖励发放失败!原因:背包空间不足,关卡代码=" + stageCode + ".");
+        // 存在没有奖励的关卡
+        if (!stage.isNoFinishedRewardItem()) {
+            if (stage.giveFinishedRewardItems(bukkitPlayer)) {
+                MsgUtil.sendMsg(bukkitPlayer, "&d已获得任务奖励!");
+            } else {
+                MsgUtil.sendMsg(bukkitPlayer, "&d任务奖励发放失败!原因:背包空间不足,关卡代码=" + stageCode + ".");
+            }
         }
 
-        bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth());
-        bukkitPlayer.setNoDamageTicks(200);
+        MsgUtil.sendTitle(bukkitPlayer, "&d任务完成");
 
         if (stage.isFinishedConfirmSpawn()) {
             MsgUtil.sendMsg(bukkitPlayer, "&e您已经通过了本关卡,你可以选择马上回到主城,也可以选择继续刷怪集齐目标数量的RPG怪物掉落物~");
             MsgUtil.sendRawMsg(bukkitPlayer, "[\"\",{\"text\":\"" + MsgUtil.HEAD_MSG + "『点我回主城』\",\"color\":\"yellow\",\"bold\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/spawn\"}}]");
         } else {
+            bukkitPlayer.setHealth(bukkitPlayer.getMaxHealth()); // 恢复满血
+            bukkitPlayer.setNoDamageTicks(200); // 无敌10s
             MsgUtil.sendMsg(bukkitPlayer, "&e6秒后 你将被传送到主城.");
+
             Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
                 Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToServerSpawnPoint(bukkitPlayer));
             }, 120L);
@@ -170,7 +171,6 @@ public class StageListener implements Listener {
             MsgUtil.sendRawMsg(player, "[\"\",{\"text\":\"" + MsgUtil.HEAD_MSG + "§e" + "『点我返回关卡』\",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/crs stage tp " + stage.getStageCode() + "\"}}]");;
         });
     }
-
 
     // _含触发事件_StagePlayerDeathEvent
     @EventHandler
