@@ -30,7 +30,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 public class MarketListener implements Listener {
     private  static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
 
-    //事件_进入集市
+    // 事件_进入集市
     @EventHandler
     public void onMarketEnterEvent(MarketEnterEvent event) {
         Player player = event.getPlayer();
@@ -58,7 +58,7 @@ public class MarketListener implements Listener {
         }
     }
 
-    //事件_攻击马
+    // 事件_攻击马
     @EventHandler
     public void onDamageHorseEvent(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();
@@ -76,7 +76,7 @@ public class MarketListener implements Listener {
 
     }
 
-    //事件_下马
+    // 事件_下马
     @EventHandler
     public void onPlayerLeaveHorseEvent(VehicleExitEvent event) {
         Entity entity = event.getExited();
@@ -92,7 +92,7 @@ public class MarketListener implements Listener {
         }
     }
 
-    //事件_点击马背包
+    // 事件_点击马背包
     @EventHandler
     public void onInvClickEvent(InventoryClickEvent event) {
         Player player = (Player)event.getWhoClicked();
@@ -109,7 +109,7 @@ public class MarketListener implements Listener {
         }
     }
 
-    //
+    // 事件_禁止攻击生物
     @EventHandler
     public void onHorseDamageEvent(EntityDamageEvent event) {
         Entity entity = event.getEntity();

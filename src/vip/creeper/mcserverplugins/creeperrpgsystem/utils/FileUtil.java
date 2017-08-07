@@ -9,6 +9,7 @@ import java.io.*;
  */
 public class FileUtil {
     private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
+    public static final String LINE_SEPARATOR = System.getProperty("line.separator");
     public static final String PLUGIN_DATA_FOLDER_PATH = plugin.getDataFolder().getAbsolutePath();
 
     //从jar包复制文件
@@ -21,13 +22,12 @@ public class FileUtil {
             StringBuilder sb = new StringBuilder();
 
             while ((lineText = bufferedReader.readLine()) != null){
-                sb.append(lineText).append(MsgUtil.LINE_SEPARATOR);
+                sb.append(lineText).append(LINE_SEPARATOR);
             }
 
             bufferedReader.close();
             reader.close();
-            writeFile(localFilePath, sb.toString());
-            return true;
+            return writeFile(localFilePath, sb.toString());
         } catch (IOException e) {
             e.printStackTrace();
         }
@@ -36,22 +36,26 @@ public class FileUtil {
     }
 
     //写文件
-    private static void writeFile(String path, String data) {
+    private static boolean writeFile(String path, String data) {
         File file = new File(path);
 
         try {
             FileWriter fw = new FileWriter(file);
 
             if (!file.exists()) {
-                file.createNewFile();
+                if (!file.createNewFile()) {
+                    return false;
+                }
             }
 
             fw.write(data);
             fw.close();
         } catch (IOException e) {
             e.printStackTrace();
+            return false;
         }
 
+        return true;
     }
 
     //得到玩家数据file

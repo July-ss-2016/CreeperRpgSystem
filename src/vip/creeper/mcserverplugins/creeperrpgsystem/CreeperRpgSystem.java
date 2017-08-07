@@ -26,10 +26,10 @@ public class CreeperRpgSystem extends JavaPlugin {
     private static final PluginManager PLUGIN_MANAGER = Bukkit.getPluginManager();
     private boolean firstLoad = true;
     private static CreeperRpgSystem instance;
-    private static Settings settings;
+    private Settings settings;
 
     public void onLoad() {
-        //阻止实例发生改变导致FileUtil出错
+        // 阻止实例发生改变导致FileUtil出错
         if (firstLoad) {
             instance = this;
         }
@@ -51,7 +51,7 @@ public class CreeperRpgSystem extends JavaPlugin {
             MsgUtil.info("文件(夹) = " + playerDataFolder.getAbsolutePath() + " 被创建.");
         }
 
-        //注册PlaceholderAPI
+        // 注册PlaceholderAPI
         new PlaceHolderApiExpansion(instance).hook();
 
         registerConfigs();
@@ -71,7 +71,7 @@ public class CreeperRpgSystem extends JavaPlugin {
     }
 
     public Settings getSettings() {
-        return this.settings;
+        return settings;
     }
 
     public static CreeperRpgSystem getInstance() {
@@ -83,7 +83,7 @@ public class CreeperRpgSystem extends JavaPlugin {
 
         commandExecutor.registerCommand("market", new MarketCommand());
         commandExecutor.registerCommand("reload", new ReloadCommand());
-        //commandExecutor.registerCommand("op", new OpCommand());
+        // commandExecutor.registerCommand("op", new OpCommand());
         commandExecutor.registerCommand("cfg", new ConfigCommand());
         commandExecutor.registerCommand("stage", new StageCommand());
         commandExecutor.registerCommand("inv", new InventoryCommand());

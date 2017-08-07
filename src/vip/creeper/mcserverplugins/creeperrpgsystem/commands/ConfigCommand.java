@@ -19,9 +19,8 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
  */
 public class ConfigCommand implements RpgCommand {
 
-
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
-        if (!cs.hasPermission("crs.admin")) {
+        if (!cs.hasPermission("CreeperRpgSystem.admin")) {
             MsgUtil.sendMsg(cs, "&c没有权限: crs.admin.");
             return true;
         }
@@ -75,7 +74,7 @@ public class ConfigCommand implements RpgCommand {
                             ConfigManager.loadConfig(ConfigType.CONFIG_STAGE);
                         }
 
-                        MsgUtil.sendMsg(player, stageSpawnLocSetResult ? "&b设置成功!" : "&c设置失败!");
+                        MsgUtil.sendMsg(player, stageSpawnLocSetResult ? "&b关卡出生点设置成功!" : "&c关卡出生点设置失败!");
                         return true;
                     default:
                         MsgUtil.sendMsg(player, "&c参数错误!");

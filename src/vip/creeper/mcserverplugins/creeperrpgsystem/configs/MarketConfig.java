@@ -21,7 +21,6 @@ import java.util.Map;
 public class MarketConfig implements RpgConfig {
     private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
 
-
     public void loadConfig() {
         Bukkit.getScheduler().runTask(plugin, () -> {
             MarketManager.unregisterAllMarkets();

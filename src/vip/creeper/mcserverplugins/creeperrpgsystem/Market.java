@@ -19,7 +19,6 @@ public class Market {
     private boolean enterGiveHorse;
     private String welcomeMsg;
 
-
     public Market(String marketCode, Location spawnLoc, String displayName, String welcomeMsg, boolean enterGiveHorse) {
         this.marketCode = marketCode;
         this.spawnLoc = spawnLoc;

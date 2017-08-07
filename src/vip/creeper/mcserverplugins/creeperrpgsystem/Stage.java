@@ -30,7 +30,6 @@ public class Stage {
     private HashMap<Optional<MythicItem>, Integer> finishedRewardItems;
     private boolean finishedConfirmSpawn;
 
-
     public Stage(String stageCode, Location spawnLoc, boolean freeStage, HashMap<String, Integer> challenges, List<String> confirmMessages, List<String> finishedDeblockingStages, List<String> finishedRewardCommands,
                  HashMap<Optional<MythicItem>, Integer> finishedRewardItems, boolean finishedConfirmSpawn) {
         this.stageCode = stageCode;

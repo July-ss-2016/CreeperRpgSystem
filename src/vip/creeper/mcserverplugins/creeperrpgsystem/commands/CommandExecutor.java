@@ -13,7 +13,6 @@ import java.util.HashMap;
 public class CommandExecutor implements org.bukkit.command.CommandExecutor {
     private HashMap<String, RpgCommand> commands = new HashMap<String, RpgCommand>();
 
-
     public boolean onCommand(CommandSender cs, Command cmd, String lable, String[] args) {
         if (args.length >= 1) {
             String firstArg = args[0].toLowerCase();

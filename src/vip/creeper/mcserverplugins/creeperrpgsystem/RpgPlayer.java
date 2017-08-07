@@ -19,7 +19,6 @@ public class RpgPlayer {
     private File playerDataFile;
     private YamlConfiguration playerDataYml;
 
-
     public RpgPlayer(String playerName, File playerDataFile) {
         this.playerName = playerName;
         this.playerDataFile = playerDataFile;
@@ -33,7 +32,7 @@ public class RpgPlayer {
         this.playerDataYml = YamlConfiguration.loadConfiguration(playerDataFile);
     }
 
-    //  得到playerName
+    // 得到playerName
     public String getPlayerName() {
         return this.playerName;
     }
@@ -65,7 +64,8 @@ public class RpgPlayer {
             temp = new ArrayList<>();
         }
 
-        MsgUtil.warring("-");
+        MsgUtil.warring();
+
         if (state) {
             // 禁止重复
             if (temp.contains(stageCode)) {

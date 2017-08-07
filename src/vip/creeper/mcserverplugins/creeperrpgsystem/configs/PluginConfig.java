@@ -20,7 +20,6 @@ public class PluginConfig implements RpgConfig {
     private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
     private static Settings settings =  plugin.getSettings();
 
-
     public void loadConfig() {
         Bukkit.getScheduler().runTask(plugin, () -> {
             File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "PluginConfig.yml");

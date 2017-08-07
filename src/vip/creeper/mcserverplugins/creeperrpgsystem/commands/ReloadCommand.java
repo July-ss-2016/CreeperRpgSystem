@@ -12,7 +12,6 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
  */
 public class ReloadCommand implements RpgCommand {
 
-
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
         if (!cs.hasPermission("crs.admin")) {
             MsgUtil.sendMsg(cs, "&c没有权限: crs.admin.");
