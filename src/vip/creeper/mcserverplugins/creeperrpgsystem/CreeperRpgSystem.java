@@ -12,7 +12,6 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.listeners.PlayerListener;
 import vip.creeper.mcserverplugins.creeperrpgsystem.listeners.StageListener;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.ConfigManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.RpgPlayerManager;
-import vip.creeper.mcserverplugins.creeperrpgsystem.tests.ListenerTest;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
@@ -24,8 +23,8 @@ import java.text.SimpleDateFormat;
  * Created by July_ on 2017/7/4.
  */
 public class CreeperRpgSystem extends JavaPlugin {
+    private static final PluginManager PLUGIN_MANAGER = Bukkit.getPluginManager();
     private boolean firstLoad = true;
-    private final PluginManager PLUGIN_MANAGER = Bukkit.getPluginManager();
     private static CreeperRpgSystem instance;
     private static Settings settings;
 
@@ -36,7 +35,7 @@ public class CreeperRpgSystem extends JavaPlugin {
         }
 
         MsgUtil.info("插件被重载!");
-        RpgPlayerManager.unreigsterAll();
+        RpgPlayerManager.unregisterAll();
     }
 
     public void onEnable() {
@@ -101,10 +100,5 @@ public class CreeperRpgSystem extends JavaPlugin {
         ConfigManager.registerConfig(ConfigType.CONFIG_PLUGIN, new PluginConfig());
         ConfigManager.registerConfig(ConfigType.CONFIG_MARKET, new MarketConfig());
         ConfigManager.registerConfig(ConfigType.CONFIG_STAGE, new StageConfig());
-    }
-
-    //初始化测试类
-    private void initTest() {
-        PLUGIN_MANAGER.registerEvents(new ListenerTest(), this);
     }
 }

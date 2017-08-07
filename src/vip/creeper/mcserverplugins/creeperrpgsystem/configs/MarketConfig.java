@@ -6,7 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Market;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgConfig;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
@@ -18,7 +18,7 @@ import java.util.Map;
 /**
  * Created by July_ on 2017/7/9.
  */
-public class MarketConfig implements ConfigImpl {
+public class MarketConfig implements RpgConfig {
     private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
 
 

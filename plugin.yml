@@ -2,6 +2,6 @@ name: CreeperRpgSystem
 main: vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem
 author: July_ss
 version: 1.0.0
-depend: [MythicMobs, Actionbar, PlaceholderAPI, EasyKits]
+depend: [MythicMobs, PlaceholderAPI]
 commands:
   crs:

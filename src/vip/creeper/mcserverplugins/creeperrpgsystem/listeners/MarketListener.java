@@ -11,6 +11,7 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.Inventory;
@@ -97,10 +98,23 @@ public class MarketListener implements Listener {
         Player player = (Player)event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
 
+        if (inv == null) {
+            return;
+        }
+
         if (MarketManager.isMarketWorld(player.getWorld().getName()) && "Mule".equals(inv.getTitle())) {
             event.setCancelled(true);
             event.setResult(Event.Result.DENY);
             MsgUtil.sendMsg(player, "&c谁允许你拿的!");
+        }
+    }
+
+    //
+    @EventHandler
+    public void onHorseDamageEvent(EntityDamageEvent event) {
+        Entity entity = event.getEntity();
+        if (MarketManager.isMarketWorld(entity.getWorld().getName())) {
+            event.setCancelled(true);
         }
     }
 }

@@ -9,7 +9,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
  * Created by July_ on 2017/7/12.
  */
 public class StageLeaveEvent extends Event {
-    private static final HandlerList handlerList = new HandlerList();
+    private static HandlerList handlerList = new HandlerList();
     private Player player;
     private Stage stage;
 

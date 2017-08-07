@@ -2,7 +2,7 @@ package vip.creeper.mcserverplugins.creeperrpgsystem.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.CommandImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgCommand;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 import java.util.HashMap;
@@ -11,7 +11,7 @@ import java.util.HashMap;
  * Created by July_ on 2017/7/16.
  */
 public class CommandExecutor implements org.bukkit.command.CommandExecutor {
-    private HashMap<String, CommandImpl> commands = new HashMap<String, CommandImpl>();
+    private HashMap<String, RpgCommand> commands = new HashMap<String, RpgCommand>();
 
 
     public boolean onCommand(CommandSender cs, Command cmd, String lable, String[] args) {
@@ -29,7 +29,7 @@ public class CommandExecutor implements org.bukkit.command.CommandExecutor {
         return  false;
     }
 
-    public void registerCommand(String firstArg, CommandImpl cmd) {
+    public void registerCommand(String firstArg, RpgCommand cmd) {
         commands.put(firstArg.toLowerCase(), cmd);
     }
 }

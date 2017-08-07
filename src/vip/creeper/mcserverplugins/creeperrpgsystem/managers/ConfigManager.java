@@ -1,7 +1,7 @@
 package vip.creeper.mcserverplugins.creeperrpgsystem.managers;
 
 import vip.creeper.mcserverplugins.creeperrpgsystem.ConfigType;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgConfig;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
@@ -16,10 +16,10 @@ import java.util.Map;
  */
 public class ConfigManager {
     private static final List<String> CONFIG_SUBFILE_NAMES = Arrays.asList("PluginConfig.yml", "StageConfig.yml", "MarketConfig.yml");
-    private static final HashMap<ConfigType, ConfigImpl> configs = new HashMap<>();
+    private static final HashMap<ConfigType, RpgConfig> configs = new HashMap<>();
 
 
-    //载入配置
+    // 载入配置
     public static boolean loadConfig(ConfigType configType) {
         if (!configs.containsKey(configType)) {
             return false;
@@ -29,12 +29,12 @@ public class ConfigManager {
         return true;
     }
 
-    //注册配置
-    public static void registerConfig(ConfigType configType, ConfigImpl config) {
+    // 注册配置
+    public static void registerConfig(ConfigType configType, RpgConfig config) {
         configs.put(configType, config);
     }
 
-    //载入所有配置
+    // 载入所有配置
     public static void loadAllConfig() {
         File configDataFolder = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs");
 
@@ -43,7 +43,7 @@ public class ConfigManager {
             MsgUtil.info("文件(夹) = " + configDataFolder.getAbsolutePath() + " 被创建.");
         }
 
-        //拷贝资源
+        // 拷贝资源
         for (String configFileName : CONFIG_SUBFILE_NAMES) {
             File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + configFileName);
 
@@ -53,13 +53,13 @@ public class ConfigManager {
             }
         }
 
-        for (Map.Entry<ConfigType, ConfigImpl> entry : configs.entrySet()) {
+        for (Map.Entry<ConfigType, RpgConfig> entry : configs.entrySet()) {
             entry.getValue().loadConfig();
         }
     }
 
-    //得到配置
-    public static ConfigImpl getConfig(ConfigType configType) {
+    // 得到配置
+    public static RpgConfig getConfig(ConfigType configType) {
         return configs.get(configType);
     }
 }

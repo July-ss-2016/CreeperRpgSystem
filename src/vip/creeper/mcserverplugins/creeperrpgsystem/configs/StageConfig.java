@@ -11,7 +11,7 @@ import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.plugin.java.JavaPlugin;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgConfig;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
@@ -25,7 +25,7 @@ import java.util.Optional;
 /**
  * Created by July_ on 2017/7/7.
  */
-public class StageConfig implements ConfigImpl {
+public class StageConfig implements RpgConfig {
     private  static JavaPlugin plugin = CreeperRpgSystem.getInstance();
     private static ItemManager mythicMobsItemManager = MythicMobs.inst().getItemManager();
 
@@ -65,7 +65,7 @@ public class StageConfig implements ConfigImpl {
                 //注册关卡
                 StageManager.registerStage(new Stage(key, new Location(Bukkit.getWorld(stageSpawnLocSection.getString("world")), stageSpawnLocSection.getDouble("x"), stageSpawnLocSection.getDouble("y"),
                         stageSpawnLocSection.getDouble("z"), Float.parseFloat(stageSpawnLocSection.getString("yaw")), Float.parseFloat(stageSpawnLocSection.getString("pitch"))), stageSection.getBoolean("free_stage"), stageChallenges, stageSection.getStringList("confirm_messages"),
-                        stageSection.getStringList("finished_deblocking_stages"), stageSection.getStringList("finished_reward_commands"), stageFinishedRewardItems));
+                        stageSection.getStringList("finished_deblocking_stages"), stageSection.getStringList("finished_reward_commands"), stageFinishedRewardItems, stageSection.getBoolean("finished_confirm_spawn", false)));
                 MsgUtil.info("关卡 = " + key + " 被载入.");
             }
         });

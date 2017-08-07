@@ -5,11 +5,4 @@ package vip.creeper.mcserverplugins.creeperrpgsystem;
  */
 public enum ConfigType {
     CONFIG_MARKET, CONFIG_PLUGIN, CONFIG_STAGE;
-
-    //不需要重写，已经重写过了
-    /*
-    public int hashCode() {
-        return ConfigType.has
-    }
-    */
 }

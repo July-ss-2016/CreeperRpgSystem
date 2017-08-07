@@ -6,7 +6,7 @@ import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Settings;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.ConfigImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgConfig;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.ConfigUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
@@ -16,7 +16,7 @@ import java.io.File;
 /**
  * Created by July_ on 2017/7/4.
  */
-public class PluginConfig implements ConfigImpl {
+public class PluginConfig implements RpgConfig {
     private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
     private static Settings settings =  plugin.getSettings();
 
@@ -32,11 +32,12 @@ public class PluginConfig implements ConfigImpl {
                     Float.parseFloat(spawnLocSection.getString("yaw")), Float.parseFloat(spawnLocSection.getString("pitch")));
             settings.stageWhitelistCommands = rootYml.getStringList("stage_whitelist_commands");
             settings.firstJoinItems = rootYml.getStringList("first_join_items");
+            settings.noDamageWorlds = rootYml.getStringList("no_damage_worlds");
             MsgUtil.info("插件配置已载入.");
         });
     }
 
-    //设置服务器出生点
+    // 设置服务器出生点
     public boolean setServerSpawnLoc(Location loc) {
         File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "PluginConfig.yml");
 

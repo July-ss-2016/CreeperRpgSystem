@@ -4,14 +4,14 @@ import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.CommandImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgCommand;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 /**
  * Created by July_ on 2017/7/9.
  */
-public class StageCommand implements CommandImpl {
+public class StageCommand implements RpgCommand {
 
 
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {

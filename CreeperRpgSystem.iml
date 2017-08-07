@@ -23,16 +23,7 @@
     <orderEntry type="module-library">
       <library>
         <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../../McTestServers/RpgSurvival_0/plugins/MythicMobs.jar!/" />
-        </CLASSES>
-        <JAVADOC />
-        <SOURCES />
-      </library>
-    </orderEntry>
-    <orderEntry type="module-library">
-      <library>
-        <CLASSES>
-          <root url="jar://$MODULE_DIR$/../../JavaCodeApi/Api/minecraft/plugins/Actionbar.jar!/" />
+          <root url="jar://$MODULE_DIR$/../../JavaCodeApi/Api/minecraft/plugins/ActionBar.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />
@@ -60,6 +51,15 @@
       <library>
         <CLASSES>
           <root url="jar://$MODULE_DIR$/../../JavaCodeApi/Api/minecraft/plugins/EasyKits-v2.0.5.jar!/" />
+        </CLASSES>
+        <JAVADOC />
+        <SOURCES />
+      </library>
+    </orderEntry>
+    <orderEntry type="module-library">
+      <library>
+        <CLASSES>
+          <root url="jar://$MODULE_DIR$/../../JavaCodeApi/Api/minecraft/plugins/MythicMobs.jar!/" />
         </CLASSES>
         <JAVADOC />
         <SOURCES />

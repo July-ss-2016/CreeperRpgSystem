@@ -7,7 +7,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.ConfigType;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Market;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
 import vip.creeper.mcserverplugins.creeperrpgsystem.configs.PluginConfig;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.CommandImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgCommand;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.ConfigManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
@@ -17,7 +17,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 /**
  * Created by July_ on 2017/7/11.
  */
-public class ConfigCommand implements CommandImpl {
+public class ConfigCommand implements RpgCommand {
 
 
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
@@ -48,6 +48,11 @@ public class ConfigCommand implements CommandImpl {
                         MsgUtil.sendMsg(player, serverSpawnLocSetResult ? "&b服务器出生点设置成功!" : "&c服务器出生点设置失败!");
                         return true;
                     case "market":
+                        if (!MarketManager.isExistsMarket(args[3])) {
+                            MsgUtil.sendMsg(cs, "集市不存在!");
+                            return true;
+                        }
+
                         Market market = MarketManager.getMarketByMarketCode(args[3]);
                         boolean marketSpawnLocSetResult = market.setSpawnLocation(player.getLocation());
 
@@ -58,6 +63,11 @@ public class ConfigCommand implements CommandImpl {
                         MsgUtil.sendMsg(player, marketSpawnLocSetResult ? "&b集市出生点设置成功!" : "&c集市出生点设置失败!");
                         return true;
                     case "stage":
+                        if (!StageManager.isExistsStage(args[3])) {
+                            MsgUtil.sendMsg(cs, "关卡不存在!");
+                            return true;
+                        }
+
                         Stage stage = StageManager.getStage(args[3]);
                         boolean stageSpawnLocSetResult = stage.setSpawnLoc(player.getLocation());
 

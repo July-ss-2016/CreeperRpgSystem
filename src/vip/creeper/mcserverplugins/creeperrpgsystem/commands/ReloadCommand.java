@@ -3,14 +3,14 @@ package vip.creeper.mcserverplugins.creeperrpgsystem.commands;
 
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.CommandImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgCommand;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.ConfigManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 /**
  * Created by July_ on 2017/7/11.
  */
-public class ReloadCommand implements CommandImpl {
+public class ReloadCommand implements RpgCommand {
 
 
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {

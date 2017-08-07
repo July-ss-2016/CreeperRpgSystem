@@ -3,7 +3,7 @@ package vip.creeper.mcserverplugins.creeperrpgsystem.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import vip.creeper.mcserverplugins.creeperrpgsystem.impls.CommandImpl;
+import vip.creeper.mcserverplugins.creeperrpgsystem.RpgCommand;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
@@ -11,7 +11,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 /**
  * Created by July_ on 2017/7/9.
  */
-public class MarketCommand implements CommandImpl {
+public class MarketCommand implements RpgCommand {
 
 
     public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {

@@ -9,7 +9,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.Market;
  * Created by July_ on 2017/7/10.
  */
 public class MarketEnterEvent extends Event {
-    private static final HandlerList handlers = new HandlerList();
+    private static final HandlerList handlerList = new HandlerList();
     private Player player;
     private  Market market;
 
@@ -20,11 +20,11 @@ public class MarketEnterEvent extends Event {
     }
 
     public HandlerList getHandlers() {
-        return handlers;
+        return handlerList;
     }
 
     public static HandlerList getHandlerList() {
-        return handlers;
+        return handlerList;
     }
 
     public Player getPlayer() {

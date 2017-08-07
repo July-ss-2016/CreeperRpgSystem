@@ -14,7 +14,7 @@ public class RpgPlayerManager {
     private static HashMap<String, RpgPlayer> rpgPlayers = new HashMap<>();
 
 
-    //得到rpg玩家
+    // 得到rpg玩家
     public static RpgPlayer getRpgPlayer(String playerName) {
         if (!rpgPlayers.containsKey(playerName)) {
             File file = FileUtil.getPlayerDataFile(playerName);
@@ -23,13 +23,13 @@ public class RpgPlayerManager {
         return rpgPlayers.get(playerName);
     }
 
-    //注销某个rpg玩家
+    // 注销某个rpg玩家
     public static void unregisterPlayer(Player player) {
         rpgPlayers.remove(player.getName());
     }
 
-    //注销所有rpg玩家
-    public static void unreigsterAll() {
+    // 注销所有rpg玩家
+    public static void unregisterAll() {
         rpgPlayers.clear();
     }
 }

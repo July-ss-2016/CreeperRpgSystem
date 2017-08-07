@@ -12,6 +12,7 @@ public class Settings {
     public String configVersion;
     public List<String> stageWhitelistCommands;
     public List<String> firstJoinItems;
+    public List<String> noDamageWorlds;
 
     public void setFirstJoinItems(List<String> firstJoinItems) {
         this.firstJoinItems = firstJoinItems;
@@ -25,23 +26,11 @@ public class Settings {
         this.configVersion = version;
     }
 
-    public void setStageWhitelistCommands(List<String> list) {
-        this.stageWhitelistCommands = list;
+    public void setStageWhitelistCommands(List<String> stageWhitelistCommands) {
+        this.stageWhitelistCommands = stageWhitelistCommands;
     }
 
-    public Location getServerSpawnLocation() {
-        return this.serverSpawnLocation;
-    }
-
-    public String getConfigVersion() {
-        return this.configVersion;
-    }
-
-    public List<String> getStageWhitelistCommands() {
-        return this.stageWhitelistCommands;
-    }
-
-    public List<String> getFirstJoinItems() {
-        return this.firstJoinItems;
+    public void setNoDamageWorlds(List<String> noDamageWorlds) {
+        this.noDamageWorlds = noDamageWorlds;
     }
 }

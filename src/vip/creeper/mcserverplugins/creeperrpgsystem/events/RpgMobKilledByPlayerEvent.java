@@ -9,7 +9,7 @@ import org.bukkit.event.HandlerList;
  * Created by July_ on 2017/7/16.
  */
 public class RpgMobKilledByPlayerEvent extends Event {
-    private static final HandlerList handlerList = new HandlerList();
+    private static HandlerList handlerList = new HandlerList();
     private Player killer;
     private MythicMob mythicMob;
 
