@@ -98,7 +98,7 @@ public class StageListener implements Listener {
         Stage stage = event.getStage();
         String stageCode = stage.getStageCode();
 
-        //  解锁关卡
+        // 解锁关卡
         for (String deblockingStage : stage.getFinishedDeblockingStages()) {
             if (!rpgPlayer.getStageState(deblockingStage)) {
 
@@ -116,7 +116,7 @@ public class StageListener implements Listener {
         stage.performFinishedRewardCommands(bukkitPlayer); // 执行指令
 
         // 发放奖励
-        if (!stage.isNoFinishedRewardItem()) { //需要排除没有奖励的关卡
+        if (!stage.isNoFinishedRewardItem()) { // 需要排除没有奖励的关卡
             if (stage.giveFinishedRewardItems(bukkitPlayer)) {
                 MsgUtil.sendMsg(bukkitPlayer, "&d已获得任务奖励!");
             } else {
