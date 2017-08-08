@@ -13,7 +13,6 @@ import java.util.HashMap;
 public class RpgPlayerManager {
     private static HashMap<String, RpgPlayer> rpgPlayers = new HashMap<>();
 
-
     // 得到rpg玩家
     public static RpgPlayer getRpgPlayer(String playerName) {
         if (!rpgPlayers.containsKey(playerName)) {

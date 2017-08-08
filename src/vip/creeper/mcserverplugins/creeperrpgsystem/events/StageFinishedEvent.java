@@ -13,7 +13,6 @@ public class StageFinishedEvent extends Event {
     private RpgPlayer rpgPlayer;
     private Stage stage;
 
-
     public StageFinishedEvent(RpgPlayer rpgPlayer, Stage stage) {
         this.rpgPlayer = rpgPlayer;
         this.stage = stage;

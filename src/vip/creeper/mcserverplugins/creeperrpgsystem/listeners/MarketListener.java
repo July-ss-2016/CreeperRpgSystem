@@ -11,7 +11,6 @@ import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.entity.EntityDamageByEntityEvent;
-import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.Inventory;
@@ -23,6 +22,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.Market;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.MarketEnterEvent;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
+import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 
 /**
  * Created by July_ on 2017/7/5.
@@ -49,12 +49,7 @@ public class MarketListener implements Listener {
             horse.setColor(Horse.Color.BLACK);
             horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 
-            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, new Runnable() {
-                @Override
-                public void run() {
-                    Bukkit.getScheduler().runTask(plugin, () -> horse.setPassenger(player));
-                }
-            }, 20L);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> horse.setPassenger(player)), 20L);
         }
     }
 
@@ -70,10 +65,9 @@ public class MarketListener implements Listener {
         Entity target = event.getEntity();
 
         if (MarketManager.isMarketWorld(target.getWorld().getName()) && (target instanceof  Horse)) {
-            MsgUtil.sendMsg((Player)damager, "&c打个屁!");
+            MsgUtil.sendMsg(damager, "&c打个屁!");
             event.setCancelled(true);
         }
-
     }
 
     // 事件_下马
@@ -111,9 +105,10 @@ public class MarketListener implements Listener {
 
     // 事件_禁止攻击生物
     @EventHandler
-    public void onHorseDamageEvent(EntityDamageEvent event) {
-        Entity entity = event.getEntity();
-        if (MarketManager.isMarketWorld(entity.getWorld().getName())) {
+    public void onHorseDamageEvent(EntityDamageByEntityEvent event) {
+        Entity damager = event.getDamager();
+
+        if (damager.getType() == EntityType.PLAYER && !Util.isAdmin((Player) damager) && MarketManager.isMarketWorld(damager.getWorld().getName())) {
             event.setCancelled(true);
         }
     }

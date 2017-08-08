@@ -18,7 +18,6 @@ public class ConfigManager {
     private static final List<String> CONFIG_SUBFILE_NAMES = Arrays.asList("PluginConfig.yml", "StageConfig.yml", "MarketConfig.yml");
     private static final HashMap<ConfigType, RpgConfig> configs = new HashMap<>();
 
-
     // 载入配置
     public static boolean loadConfig(ConfigType configType) {
         if (!configs.containsKey(configType)) {

@@ -30,9 +30,7 @@ import java.util.HashMap;
 public class StageListener implements Listener {
     private CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
     private BukkitAPIHelper mythicMobApi = MythicMobs.inst().getAPIHelper();
-    private HashMap<String, StageMobKillingCounter> playerStageMobCounters = new HashMap<String, StageMobKillingCounter>(); // 玩家名对应怪物单关卡击杀数统计器
-
-
+    private HashMap<String, StageMobKillingCounter> playerStageMobCounters = new HashMap<>(); // 玩家名对应怪物单关卡击杀数统计器
 
     // 事件_RPG怪物被击杀
     @EventHandler
@@ -40,19 +38,18 @@ public class StageListener implements Listener {
         Player player = event.getKiller();
         String playerName = player.getName();
         MythicMob mythicMob = event.getMythicMob();
-
         String mobCode = mythicMob.getInternalName();
 
+        // 为了安全先判断玩家是否有计数器
         if (!playerStageMobCounters.containsKey(playerName)) {
             Util.teleportToServerSpawnPoint(player);
             MsgUtil.sendMsg(player, "&c系统错误:怪物计数器不存在.");
             return;
         }
 
-        // smc成员变量是静态的
-        // MsgUtil.warring(playerName);
-        StageMobKillingCounter smk = playerStageMobCounters.get(playerName);
-        Stage stage = smk.getStage();
+
+        StageMobKillingCounter stageMobKillingCounter = playerStageMobCounters.get(playerName);
+        Stage stage = stageMobKillingCounter.getStage();
 
         // 这里为了确保安全，判断下是否为非本关卡的怪物
         if (!stage.isChallengeMob(mobCode)) {
@@ -61,21 +58,21 @@ public class StageListener implements Listener {
         }
 
         // 添加次数
-        smk.addCount(mobCode);
+        stageMobKillingCounter.addCount(mobCode);
 
         // 任务完成百分比
-        double totalFinishingPercent = smk.getTotalFinishingPercent();
+        double totalFinishingPercent = stageMobKillingCounter.getTotalFinishingPercent();
 
-        // 发送subtitle告知玩家任务进度
+        // 发送SubTitle告知玩家任务进度
         MsgUtil.sendSubTitle(player, "&d任务进度 &b> &d" + (int)(totalFinishingPercent * 100) + "%");
 
-        // 完成任务，触发事件，让事件去处理
+        // 完成任务，触发事件，让指定事件去处理
         if (totalFinishingPercent == 1) {
             Bukkit.getPluginManager().callEvent(new StageFinishedEvent(RpgPlayerManager.getRpgPlayer(playerName), stage));
         } else {
             // 提示需要下一个攻击的目标
             Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> {
-                String firstNeedKillMobCode= smk.getFirstNeedKillMobCode();
+                String firstNeedKillMobCode = stageMobKillingCounter.getFirstNeedKillMobCode();
 
                 if (firstNeedKillMobCode != null) {
                     MythicMob firstNeedKillMob = mythicMobApi.getMythicMob(firstNeedKillMobCode);
@@ -85,6 +82,8 @@ public class StageListener implements Listener {
                     } else {
                         MsgUtil.sendMsg(player,"&c系统错误:配置中存在不存在的怪物!");
                     }
+                } else {
+                    MsgUtil.sendMsg(player,"&c系统错误:First need killing mobs not exist.");
                 }
             }), 30L); // 1.5s
         }
@@ -98,7 +97,6 @@ public class StageListener implements Listener {
         String playerName = bukkitPlayer.getName();
         Stage stage = event.getStage();
         String stageCode = stage.getStageCode();
-        boolean giveFinishedRewardKitResult;
 
         //  解锁关卡
         for (String deblockingStage : stage.getFinishedDeblockingStages()) {
@@ -117,8 +115,8 @@ public class StageListener implements Listener {
         playerStageMobCounters.get(playerName).resetCounts(); //清空次数
         stage.performFinishedRewardCommands(bukkitPlayer); // 执行指令
 
-        // 存在没有奖励的关卡
-        if (!stage.isNoFinishedRewardItem()) {
+        // 发放奖励
+        if (!stage.isNoFinishedRewardItem()) { //需要排除没有奖励的关卡
             if (stage.giveFinishedRewardItems(bukkitPlayer)) {
                 MsgUtil.sendMsg(bukkitPlayer, "&d已获得任务奖励!");
             } else {
@@ -128,6 +126,7 @@ public class StageListener implements Listener {
 
         MsgUtil.sendTitle(bukkitPlayer, "&d任务完成");
 
+        // 判断是否需要确认过后才能回主城，而不是自动的
         if (stage.isFinishedConfirmSpawn()) {
             MsgUtil.sendMsg(bukkitPlayer, "&e您已经通过了本关卡,你可以选择马上回到主城,也可以选择继续刷怪集齐目标数量的RPG怪物掉落物~");
             MsgUtil.sendRawMsg(bukkitPlayer, "[\"\",{\"text\":\"" + MsgUtil.HEAD_MSG + "『点我回主城』\",\"color\":\"yellow\",\"bold\":true,\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/spawn\"}}]");
@@ -136,9 +135,7 @@ public class StageListener implements Listener {
             bukkitPlayer.setNoDamageTicks(200); // 无敌10s
             MsgUtil.sendMsg(bukkitPlayer, "&e6秒后 你将被传送到主城.");
 
-            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> {
-                Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToServerSpawnPoint(bukkitPlayer));
-            }, 120L);
+            Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToServerSpawnPoint(bukkitPlayer)), 120L);
         }
 
     }
@@ -165,11 +162,7 @@ public class StageListener implements Listener {
         Player player = event.getPlayer();
         Stage stage = event.getStage();
 
-        // MsgUtil.sendMsg(player, "&e关卡进度已保留.");
-
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            MsgUtil.sendRawMsg(player, "[\"\",{\"text\":\"" + MsgUtil.HEAD_MSG + "§e" + "『点我返回关卡』\",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/crs stage tp " + stage.getStageCode() + "\"}}]");;
-        });
+        Bukkit.getScheduler().runTask(plugin, () -> MsgUtil.sendRawMsg(player, "[\"\",{\"text\":\"" + MsgUtil.HEAD_MSG + "§e" + "『点我返回关卡』\",\"color\":\"yellow\",\"clickEvent\":{\"action\":\"run_command\",\"value\":\"/crs stage tp " + stage.getStageCode() + "\"}}]"));
     }
 
     // _含触发事件_StagePlayerDeathEvent
@@ -182,7 +175,7 @@ public class StageListener implements Listener {
             return;
         }
 
-        Bukkit.getScheduler().runTask(plugin, (Runnable) () -> Util.teleportToServerSpawnPoint(player));
+        Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToServerSpawnPoint(player));
 
         if (playerStageMobCounters.containsKey(playerName)) {
             Bukkit.getPluginManager().callEvent(new StagePlayerRespawnEvent(player, playerStageMobCounters.get(playerName).getStage()));

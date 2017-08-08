@@ -15,7 +15,6 @@ public class StageMobKillingCounter {
     private int totalChallengeCount;
     private static HashMap<String, Integer> counter ;
 
-
     public StageMobKillingCounter(Player player, Stage stage) {
         this.player = player;
         this.stage = stage;
