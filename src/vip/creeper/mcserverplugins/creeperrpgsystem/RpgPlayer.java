@@ -4,7 +4,6 @@ import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
-import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 import java.io.File;
 import java.io.IOException;
@@ -19,7 +18,7 @@ public class RpgPlayer {
     private File playerDataFile;
     private YamlConfiguration playerDataYml;
 
-    public RpgPlayer(String playerName, File playerDataFile) {
+    public RpgPlayer(final String playerName, final File playerDataFile) {
         this.playerName = playerName;
         this.playerDataFile = playerDataFile;
 
@@ -43,7 +42,7 @@ public class RpgPlayer {
     }
 
     //得到玩家关卡解锁状态
-    public boolean getStageState(String stageCode) {
+    public boolean getStageState(final String stageCode) {
         return this.getDeblockingStages().contains(stageCode);
     }
 
@@ -53,7 +52,7 @@ public class RpgPlayer {
     }
 
     //设置关卡通过状态
-    public boolean setStageState(String stageCode, boolean state) {
+    public boolean setStageState(final String stageCode, final boolean state) {
         if (!StageManager.isExistsStage(stageCode)) {
             return false;
         }
@@ -63,8 +62,6 @@ public class RpgPlayer {
         if (temp == null) {
             temp = new ArrayList<>();
         }
-
-        MsgUtil.warring();
 
         if (state) {
             //禁止重复
@@ -86,7 +83,7 @@ public class RpgPlayer {
         return playerDataYml.getBoolean("first_played", true);
     }
 
-    public boolean setFirstPlayed(boolean state) {
+    public boolean setFirstPlayed(final boolean state) {
         playerDataYml.set("first_played", state);
         return saveYml();
     }

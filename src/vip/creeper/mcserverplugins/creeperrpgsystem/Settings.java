@@ -14,23 +14,23 @@ public class Settings {
     public List<String> firstJoinItems;
     public List<String> noDamageWorlds;
 
-    public void setFirstJoinItems(List<String> firstJoinItems) {
+    public void setFirstJoinItems(final List<String> firstJoinItems) {
         this.firstJoinItems = firstJoinItems;
     }
 
-    public void setServerSpawnLocation(Location loc) {
+    public void setServerSpawnLocation(final Location loc) {
         this.serverSpawnLocation = loc;
     }
 
-    public void setConfigVersion(String version) {
+    public void setConfigVersion(final String version) {
         this.configVersion = version;
     }
 
-    public void setStageWhitelistCommands(List<String> stageWhitelistCommands) {
+    public void setStageWhitelistCommands(final List<String> stageWhitelistCommands) {
         this.stageWhitelistCommands = stageWhitelistCommands;
     }
 
-    public void setNoDamageWorlds(List<String> noDamageWorlds) {
+    public void setNoDamageWorlds(final List<String> noDamageWorlds) {
         this.noDamageWorlds = noDamageWorlds;
     }
 }

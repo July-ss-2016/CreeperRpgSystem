@@ -22,7 +22,6 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.Market;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.MarketEnterEvent;
 import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
-import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 
 /**
  * Created by July_ on 2017/7/5.
@@ -89,9 +88,7 @@ public class MarketListener implements Listener {
     //事件_禁止攻击生物
     @EventHandler
     public void onHorseDamageEvent(EntityDamageByEntityEvent event) {
-        Entity damager = event.getDamager();
-
-        if (damager.getType() == EntityType.PLAYER && !Util.isAdmin((Player) damager) && MarketManager.isMarketWorld(damager.getWorld().getName())) {
+        if (event.getEntityType() == EntityType.HORSE && MarketManager.isMarketWorld(event.getDamager().getWorld().getName())) {
             event.setCancelled(true);
         }
     }

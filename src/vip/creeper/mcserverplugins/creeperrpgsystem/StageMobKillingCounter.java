@@ -13,19 +13,17 @@ public class StageMobKillingCounter {
     private Player player;
     private Stage stage;
     private int totalChallengeCount;
-    private static HashMap<String, Integer> counter ;
+    private HashMap<String, Integer> counter ;
 
-    public StageMobKillingCounter(Player player, Stage stage) {
+    public StageMobKillingCounter(final Player player, final Stage stage) {
         this.player = player;
         this.stage = stage;
-
         this.totalChallengeCount = 0;
+        this.counter = new HashMap<>();
 
         for (Map.Entry<String, Integer> entry : stage.getChallenges().entrySet()) {
-            totalChallengeCount += entry.getValue();
+            this.totalChallengeCount += entry.getValue();
         }
-
-        counter = new HashMap<>();
     }
 
     public Player getPlayer() {
@@ -33,25 +31,25 @@ public class StageMobKillingCounter {
     }
 
     //添加次数
-    public void addCount(String mobName) {
-        int current = counter.getOrDefault(mobName, 0);
+    public void addCount(final String mobName) {
+        int current = this.counter.getOrDefault(mobName, 0);
 
-        counter.put(mobName, current + 1);
+        this.counter.put(mobName, current + 1);
     }
 
     //得到次数
-    public int getCount(String mobName) {
-        return counter.getOrDefault(mobName, 0);
+    public int getCount(final String mobName) {
+        return this.counter.getOrDefault(mobName, 0);
     }
 
     //重置次数
     public void resetCounts() {
-        counter.clear();
+        this.counter.clear();
     }
 
     //重置次数
-    public void resetCount(String mobName) {
-        counter.remove(mobName);
+    public void resetCount(final String mobName) {
+        this.counter.remove(mobName);
     }
 
     //得到关卡
@@ -77,12 +75,12 @@ public class StageMobKillingCounter {
     }
 
     //单个怪物击杀数
-    public int getSingleMobKillingCount(String mobName) {
-        return counter.getOrDefault(mobName, 0);
+    public int getSingleMobKillingCount(final String mobName) {
+        return this.counter.getOrDefault(mobName, 0);
     }
 
     //单个怪物击杀完成比 0.x
-    public double getSingleMobFinishingPercent(String mobName) {
+    public double getSingleMobFinishingPercent(final String mobName) {
         int killingCount = getCount(mobName);
         int challengeCount = getChallengeCount(mobName);
 
@@ -90,7 +88,7 @@ public class StageMobKillingCounter {
     }
 
     //单个怪物目标击杀数
-    public int getChallengeCount(String mobName) {
+    public int getChallengeCount(final String mobName) {
         return this.stage.getChallenges().get(mobName);
     }
 

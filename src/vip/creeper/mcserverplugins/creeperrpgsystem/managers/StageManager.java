@@ -18,7 +18,7 @@ public class StageManager {
     private static HashMap<String, String> unfinishedStagePlayers = new HashMap<>();
     private static List<String> stageWorlds = new ArrayList<>();
 
-    public static boolean setPlayerStagePassed(String playerName, String stageCode, boolean state) {
+    public static boolean setPlayerStagePassed(final String playerName, final String stageCode, final boolean state) {
         File file = FileUtil.getPlayerDataFile(playerName);
 
         try {
@@ -52,12 +52,12 @@ public class StageManager {
     }
 
     //通过关卡代码得到关卡
-    public static Stage getStage(String stageCode) {
+    public static Stage getStage(final String stageCode) {
         return stages.getOrDefault(stageCode, null);
     }
 
     //判断是否存在关卡
-    public static boolean isExistsStage(String stageCode) {
+    public static boolean isExistsStage(final String stageCode) {
         return stages.containsKey(stageCode);
     }
 
@@ -73,7 +73,7 @@ public class StageManager {
     }
 
     //注册关卡
-    public static void registerStage(Stage stage) {
+    public static void registerStage(final Stage stage) {
         stages.put(stage.getStageCode(), stage);
 
         String worldName = stage.getSpawnLoc().getWorld().getName();
@@ -84,17 +84,17 @@ public class StageManager {
     }
 
     //添加某玩家未完待续的关卡
-    public static void addUnfinishedStagePlayer(String playerName, String stageCode) {
+    public static void addUnfinishedStagePlayer(final String playerName, final String stageCode) {
         unfinishedStagePlayers.put(playerName, stageCode);
     }
 
     //得到某玩家未完待续的关卡
-    public static String getUnfinishedStage(String playerName) {
+    public static String getUnfinishedStage(final String playerName) {
         return unfinishedStagePlayers.get(playerName);
     }
 
     //判断是否为关卡世界
-    public static boolean isStageWorld(String worldName) {
+    public static boolean isStageWorld(final String worldName) {
         return stageWorlds.contains(worldName);
     }
 }

@@ -21,7 +21,7 @@ public class MsgUtil {
     private static final com.sn1cko.actionbar.actionbar actionBar = (com.sn1cko.actionbar.actionbar) Bukkit.getPluginManager().getPlugin("Actionbar");
 
     //输出信息
-    public static void info(String msg) {
+    public static void info(final String msg) {
         logger.info(msg);
     }
 
@@ -41,39 +41,39 @@ public class MsgUtil {
     }
 
     //输出警告信息
-    public static void warring() {
-        logger.warning("-");
+    public static void warring(final String msg) {
+        logger.warning(msg);
     }
 
     //发送raw json msg
-    public static void sendRawMsg(CommandSender cs, String json) {
+    public static void sendRawMsg(final CommandSender cs, final String json) {
         Bukkit.dispatchCommand(Bukkit.getConsoleSender(), "tellraw " + cs.getName() + " " + json);
     }
 
     //发送actionbar
-    public static boolean sendActionBar(Player player, String msg) {
+    public static boolean sendActionBar(final Player player, final String msg) {
         com.sn1cko.actionbar.methods.theAction.sendAction(player, msg, actionBar,true);
         return true;
     }
 
     //发送title
-    public static void sendTitle(Player player, String text) {
+    public static void sendTitle(final Player player, final String text) {
         CreeperTitleAPI.getTitleManager().sendTitle(player, TitleManager.TitleType.TITLE, ChatColor.translateAlternateColorCodes('&', text), 0, 60, 20);
     }
 
     //发送小title
-    public static void sendSubTitle(Player player, String text) {
+    public static void sendSubTitle(final Player player, final String text) {
         CreeperTitleAPI.getTitleManager().sendTitle(player, TitleManager.TitleType.TITLE, "" ,0, 0, 0);
         CreeperTitleAPI.getTitleManager().sendTitle(player, TitleManager.TitleType.SUBTITLE, ChatColor.translateAlternateColorCodes('&', text), 0, 60, 20);
     }
 
     //发送广播消息
-    public static void sendBroadcastMsg(String msg) {
+    public static void sendBroadcastMsg(final String msg) {
         Bukkit.getServer().broadcastMessage(HEAD_MSG + ChatColor.translateAlternateColorCodes('&', msg));
     }
 
     //得到替换过变量后的msg
-    public static String getReplacedVariableMsg(String msg, CommandSender cs) {
+    public static String getReplacedVariableMsg(final String msg, final CommandSender cs) {
         return msg.replace("%head_msg%", HEAD_MSG).replace("%player_name", cs.getName());
     }
 }

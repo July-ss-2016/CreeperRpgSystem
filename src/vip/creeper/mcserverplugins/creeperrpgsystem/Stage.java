@@ -22,7 +22,7 @@ import java.util.*;
 public class Stage {
     private String stageCode;
     private org.bukkit.Location spawnLoc;
-    private boolean freeStage;
+    private boolean isFreeStage;
     private HashMap<String, Integer> challenges;
     private List<String> confirmMessages;
     private List<String> finishedDeblockingStages;
@@ -30,11 +30,11 @@ public class Stage {
     private HashMap<Optional<MythicItem>, Integer> finishedRewardItems;
     private boolean finishedConfirmSpawn;
 
-    public Stage(String stageCode, Location spawnLoc, boolean freeStage, HashMap<String, Integer> challenges, List<String> confirmMessages, List<String> finishedDeblockingStages, List<String> finishedRewardCommands,
-                 HashMap<Optional<MythicItem>, Integer> finishedRewardItems, boolean finishedConfirmSpawn) {
+    public Stage(final String stageCode, final Location spawnLoc, final boolean isFreeStage, final HashMap<String, Integer> challenges, final List<String> confirmMessages, final List<String> finishedDeblockingStages,
+                 final List<String> finishedRewardCommands, final HashMap<Optional<MythicItem>, Integer> finishedRewardItems, final boolean finishedConfirmSpawn) {
         this.stageCode = stageCode;
         this.spawnLoc = spawnLoc;
-        this.freeStage = freeStage;
+        this.isFreeStage = isFreeStage;
         this.challenges = challenges;
         this.confirmMessages = confirmMessages;
         this.finishedDeblockingStages = finishedDeblockingStages;
@@ -50,7 +50,7 @@ public class Stage {
 
     //是否为免费关卡
     public boolean isFreeStage() {
-        return this.freeStage;
+        return this.isFreeStage;
     }
 
     //得到出生点
@@ -89,12 +89,12 @@ public class Stage {
     }
 
     //得到玩家关卡解锁状态
-    public boolean getPlayerStageState(String playerName) {
+    public boolean getPlayerStageState(final String playerName) {
         return RpgPlayerManager.getRpgPlayer(playerName).getStageState(this.stageCode);
     }
 
     //关卡传送
-    public void tp(Player player) {
+    public void tp(final Player player) {
         StageEnterEvent event = new StageEnterEvent(player, this);
         Bukkit.getPluginManager().callEvent(event);
 
@@ -103,7 +103,7 @@ public class Stage {
     }
 
     //发送去人信息
-    public void sendConfirmTpMsg(Player player) {
+    public void sendConfirmTpMsg(final Player player) {
         for (String confirmMessage : confirmMessages) {
             MsgUtil.sendReplacedVarMsg(player, confirmMessage);
         }
@@ -113,13 +113,13 @@ public class Stage {
     }
 
     //设置关卡出生点
-    public boolean setSpawnLoc(Location loc) {
+    public boolean setSpawnLoc(final Location loc) {
         File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "stages_0_8.yml");
         return ConfigUtil.setLocConfig(file, "stages." + this.stageCode + ".spawn_loc", loc);
     }
 
     //判断是否为任务怪物
-    public boolean isChallengeMob(String mobCode) {
+    public boolean isChallengeMob(final String mobCode) {
         return challenges.containsKey(mobCode);
     }
 
@@ -131,7 +131,7 @@ public class Stage {
     }
 
     //给予完成任务奖励的物品
-    public boolean giveFinishedRewardItems(Player player) {
+    public boolean giveFinishedRewardItems(final Player player) {
         if (isNoFinishedRewardItem()) {
             return true;
         }

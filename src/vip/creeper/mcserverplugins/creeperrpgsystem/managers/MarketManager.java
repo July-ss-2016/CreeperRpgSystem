@@ -12,7 +12,7 @@ public class MarketManager {
     private static HashMap<String, Market> worldNameForMarkets = new HashMap<>();
 
     //注册集市
-    public static void registerMarket(Market market) {
+    public static void registerMarket(final Market market) {
         String marketCode = market.getMarketCode();
 
         stageCodeForMarkets.put(marketCode, market);
@@ -20,17 +20,17 @@ public class MarketManager {
     }
 
     //判断是否存在集市
-    public static boolean isExistsMarket(String marketCode) {
+    public static boolean isExistsMarket(final String marketCode) {
         return stageCodeForMarkets.containsKey(marketCode);
     }
 
     //通过世界名获得集市
-    public static Market getMarketByWorldName(String worldName) {
+    public static Market getMarketByWorldName(final String worldName) {
         return worldNameForMarkets.getOrDefault(worldName, null);
     }
 
     //通过集市代码获得集市
-    public static Market getMarketByMarketCode(String marketCode) {
+    public static Market getMarketByMarketCode(final String marketCode) {
         return stageCodeForMarkets.getOrDefault(marketCode, null);
     }
 
@@ -40,7 +40,7 @@ public class MarketManager {
     }
 
     //根据世界名判断是否为集市世界
-    public static boolean isMarketWorld(String worldName) {
+    public static boolean isMarketWorld(final String worldName) {
         return worldNameForMarkets.containsKey(worldName);
     }
 

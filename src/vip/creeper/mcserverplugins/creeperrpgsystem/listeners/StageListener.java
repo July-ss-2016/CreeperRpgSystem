@@ -64,7 +64,7 @@ public class StageListener implements Listener {
         double totalFinishingPercent = stageMobKillingCounter.getTotalFinishingPercent();
 
         //发送SubTitle告知玩家任务进度
-        MsgUtil.sendSubTitle(player, "&d任务进度 &b> &d" + (int)(totalFinishingPercent * 100) + "%");
+        MsgUtil.sendSubTitle(player, "&d任务进度 &b> &d" + (int) (totalFinishingPercent * 100) + "%");
 
         //完成任务，触发事件，让指定事件去处理
         if (totalFinishingPercent == 1) {
@@ -148,7 +148,7 @@ public class StageListener implements Listener {
         String playerName = player.getName();
 
         // 不含key，或含key但关卡已变
-        if (!playerStageMobCounters.containsKey(playerName) || playerStageMobCounters.containsKey(playerName) && !playerStageMobCounters.get(playerName).getStage().getStageCode().equals(stage.getStageCode())) {
+        if (!playerStageMobCounters.containsKey(playerName) || (playerStageMobCounters.containsKey(playerName) && !playerStageMobCounters.get(playerName).getStage().getStageCode().equals(stage.getStageCode()))) {
             //存储计数器
             playerStageMobCounters.put(playerName, new StageMobKillingCounter(player, stage));
         }

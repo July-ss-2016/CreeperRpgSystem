@@ -11,12 +11,12 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
  */
 public class PlaceHolderApiExpansion extends EZPlaceholderHook {
 
-    public PlaceHolderApiExpansion(Plugin plugin) {
+    public PlaceHolderApiExpansion(final Plugin plugin) {
         super(plugin, "crs");
     }
 
     //请求事件
-    public String onPlaceholderRequest(Player player, String str) {
+    public String onPlaceholderRequest(final Player player, final String str) {
         String playerName = player.getName();
 
         //前缀过滤，排除其他插件

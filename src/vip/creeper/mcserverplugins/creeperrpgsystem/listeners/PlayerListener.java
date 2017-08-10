@@ -31,12 +31,12 @@ public class PlayerListener implements Listener {
     //事件_玩家进入
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
-        Player player = event.getPlayer();
-        RpgPlayer rpgPlayer = RpgPlayerManager.getRpgPlayer(player.getName());
-        PlayerInventory playerInventory = player.getInventory();
-
         //必须用同步线程
         Bukkit.getScheduler().runTask(plugin, () -> {
+            Player player = event.getPlayer();
+            RpgPlayer rpgPlayer = RpgPlayerManager.getRpgPlayer(player.getName());
+            PlayerInventory playerInventory = player.getInventory();
+
             Util.teleportToServerSpawnPoint(player);
 
             //第一次登录
@@ -46,8 +46,8 @@ public class PlayerListener implements Listener {
                 while (i < settings.firstJoinItems.size()) {
                     Optional<MythicItem> optional = MythicMobs.inst().getItemManager().getItem(settings.firstJoinItems.get(i));
 
-                    if (optional != null && !optional.isPresent()) {
-                        MythicItem item = optional.get();
+                    if (optional != null) {
+                        @SuppressWarnings("ConstantConditions") MythicItem item = optional.get();
                         playerInventory.addItem(BukkitAdapter.adapt(item.generateItemStack(1, BukkitAdapter.adapt(player), BukkitAdapter.adapt(player))));
 
                     }
@@ -57,7 +57,6 @@ public class PlayerListener implements Listener {
 
                 //设置非第一次登录
                 rpgPlayer.setFirstPlayed(false);
-
                 MsgUtil.sendMsg(player,"您已获得Rpg新手礼包~");
             }
         });

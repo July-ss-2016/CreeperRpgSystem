@@ -19,7 +19,7 @@ public class Market {
     private boolean enterGiveHorse;
     private String welcomeMsg;
 
-    public Market(String marketCode, Location spawnLoc, String displayName, String welcomeMsg, boolean enterGiveHorse) {
+    public Market(final String marketCode, final Location spawnLoc, final String displayName, final String welcomeMsg, final boolean enterGiveHorse) {
         this.marketCode = marketCode;
         this.spawnLoc = spawnLoc;
         this.displayName = displayName;
@@ -59,7 +59,7 @@ public class Market {
     }
 
     //设置出生点
-    public boolean setSpawnLocation(Location loc) {
+    public boolean setSpawnLocation(final Location loc) {
         File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "markets_0_8.yml");
         return ConfigUtil.setLocConfig(file, "markets." + marketCode + ".spawn_loc", loc);
     }

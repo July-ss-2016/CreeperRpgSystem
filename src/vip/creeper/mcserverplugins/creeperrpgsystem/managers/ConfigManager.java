@@ -16,7 +16,7 @@ public class ConfigManager {
     private static final HashMap<ConfigType, RpgConfig> configs = new HashMap<>();
 
     //注册配置
-    public static void registerConfig(ConfigType configType, RpgConfig config) {
+    public static void registerConfig(final ConfigType configType, final RpgConfig config) {
         configs.put(configType, config);
     }
 
@@ -28,12 +28,12 @@ public class ConfigManager {
     }
 
     //得到配置
-    public static RpgConfig getConfig(ConfigType configType) {
+    public static RpgConfig getConfig(final ConfigType configType) {
         return configs.get(configType);
     }
 
     //载入单个配置
-    public static boolean loadConfig(ConfigType configType) {
+    public static boolean loadConfig(final ConfigType configType) {
         RpgConfig config = getConfig(configType);
 
         if (config != null) {
