@@ -1,0 +1,190 @@
+stages:
+  STAGE_A0:
+    spawn_loc:
+      world: w_instance_0
+      x: 1512.384976186346
+      y: 5.0
+      z: -655.424771954853
+      yaw: -219.50006
+      pitch: 4.6000004
+    free_stage: true
+    challenges:
+    - MOB_A0:10
+    confirm_messages:
+    - ''
+    - "&d\u4f60\u5373\u5c06\u6311\u6218\u526f\u672c\u5173\u5361,\u8bf7\u4ed4\u7ec6\
+      \u9605\u8bfb\u4ee5\u4e0b\u4fe1\u606f,\u51c6\u5907\u597d\u4e86\u8bf7\u70b9\u51fb\
+      \u6309\u94ae\u8fdb\u5165~"
+    - "&f\u5173\u5361\u4ee3\u7801 &b: &fSTAGE_AO"
+    - "&f\u96be\u5ea6\u7cfb\u6570 &b: &f0.5"
+    - "&f\u51fb\u6740\u8981\u6c42 &b: &f\u521d\u7ea7\u50f5\u5c38 &b> &f10"
+    - "&f\u901a\u5173\u5956\u52b1 &b: &f\u89e3\u9501\u5173\u5361 &b> &fSTAGE_A1  &f\u5fa1\
+      \u7075\u788e\u7247 &b> &f1"
+    finished_reward_commands: {}
+    finished_reward_items:
+    - REWARD_A0:1
+    finished_deblocking_stages:
+    - STAGE_A1
+  STAGE_A1:
+    spawn_loc:
+      world: w_instance_0
+      x: 1610.699999988079
+      y: 78.0
+      z: -865.6999999880791
+      yaw: -315.3506
+      pitch: 36.699955
+    challenges:
+    - MOB_A0:5
+    - MOB_A1:5
+    confirm_messages:
+    - ''
+    - "&d\u4f60\u5373\u5c06\u6311\u6218\u526f\u672c\u5173\u5361,\u8bf7\u4ed4\u7ec6\
+      \u9605\u8bfb\u4ee5\u4e0b\u4fe1\u606f,\u51c6\u5907\u597d\u4e86\u8bf7\u70b9\u51fb\
+      \u6309\u94ae\u8fdb\u5165~"
+    - "&f\u5173\u5361\u4ee3\u7801 &b: &fSTAGE_A1"
+    - "&f\u96be\u5ea6\u7cfb\u6570 &b: &f0.7"
+    - "&f\u51fb\u6740\u8981\u6c42 &b: &f\u521d\u7ea7\u50f5\u5c38 &b> &f5  &f\u7eaa\
+      \u660c &b> &f5"
+    - "&f\u901a\u5173\u5956\u52b1 &b: &f\u89e3\u9501\u5173\u5361 &b> &fSTAGE_A2  &f\u4e0a\
+      \u53e4\u4e4b\u77f3 &b> &f1  &f\u5fa1\u7075\u788e\u7247 &b> &f1"
+    finished_reward_commands: {}
+    finished_reward_items:
+    - REWARD_A0:1
+    - REWARD_A1:1
+    finished_deblocking_stages:
+    - STAGE_A2
+  STAGE_A2:
+    spawn_loc:
+      world: w_instance_0
+      x: 1355.0765275723631
+      y: 59.0
+      z: -664.090769640328
+      yaw: -359.45935
+      pitch: 2.5500033
+    challenges:
+    - MOB_A2:10
+    - MOB_A3:5
+    confirm_messages:
+    - ''
+    - "&d\u4f60\u5373\u5c06\u6311\u6218\u526f\u672c\u5173\u5361,\u8bf7\u4ed4\u7ec6\
+      \u9605\u8bfb\u4ee5\u4e0b\u4fe1\u606f,\u51c6\u5907\u597d\u4e86\u8bf7\u70b9\u51fb\
+      \u6309\u94ae\u8fdb\u5165~"
+    - "&f\u5173\u5361\u4ee3\u7801 &b: &fSTAGE_A2"
+    - "&f\u96be\u5ea6\u7cfb\u6570 &b: &f1.3"
+    - "&f\u51fb\u6740\u8981\u6c42 &b: &f\u5bb3\u6015 &b> &f10 &f\u6254 &b> &f5"
+    - "&f\u901a\u5173\u5956\u52b1 &b: &f\u89e3\u9501\u5173\u5361 &b> &fSTAGE_A3  &f\u5766\
+      \u6851\u77f3 &b> &f2"
+    finished_reward_commands: {}
+    finished_reward_items:
+    - REWARD_A2:1
+    finished_deblocking_stages:
+    - STAGE_A3
+  STAGE_A3:
+    spawn_loc:
+      world: w_instance_0
+      x: 1159.7776434919715
+      y: 9.0
+      z: -632.4974551266998
+      yaw: -300.80664
+      pitch: 17.40015
+    challenges:
+    - MOB_A4:4
+    confirm_messages:
+    - ''
+    - "&d\u4f60\u5373\u5c06\u6311\u6218\u526f\u672c\u5173\u5361,\u8bf7\u4ed4\u7ec6\
+      \u9605\u8bfb\u4ee5\u4e0b\u4fe1\u606f,\u51c6\u5907\u597d\u4e86\u8bf7\u70b9\u51fb\
+      \u6309\u94ae\u8fdb\u5165~"
+    - "&f\u5173\u5361\u4ee3\u7801 &b: &fSTAGE_A3"
+    - "&f\u96be\u5ea6\u7cfb\u6570 &b: &f1.5"
+    - "&f\u51fb\u6740\u8981\u6c42 &b: &f\u5deb\u5e08 &b> &f4"
+    - "&f\u901a\u5173\u5956\u52b1 &b: &f\u89e3\u9501\u5173\u5361 &b> &fSTAGE_A4  &f\u6708\
+      \u957f\u77f3 &b> &f1"
+    finished_reward_commands: {}
+    finished_reward_items:
+    - REWARD_A3:1
+    finished_deblocking_stages:
+    - STAGE_A4
+  STAGE_A4:
+    spawn_loc:
+      world: w_instance_0
+      x: 1249.445384553432
+      y: 5.0
+      z: -865.0573654122172
+      yaw: -198.51865
+      pitch: 30.299988
+    challenges:
+    - MOB_A5:0
+    - MOB_A6:1
+    confirm_messages:
+    - ''
+    - "&d\u4f60\u5373\u5c06\u6311\u6218\u526f\u672cBOSS\u5173\u5361,\u8bf7\u4ed4\u7ec6\
+      \u9605\u8bfb\u4ee5\u4e0b\u4fe1\u606f,\u51c6\u5907\u597d\u4e86\u8bf7\u70b9\u51fb\
+      \u6309\u94ae\u8fdb\u5165~"
+    - "&f\u901a\u5173\u65b9\u5f0f &b: &f\u6740\u6b7bBoss\u65f6\u51fb\u6740\u4e00\u4e2a\
+      \u81ea\u52a8\u751f\u6210\u7684\u7f8a\u5373\u53ef"
+    - "&f\u5173\u5361\u4ee3\u7801 &b: &fSTAGE_A4"
+    - "&f\u96be\u5ea6\u7cfb\u6570 &b: &f2.0"
+    - "&f\u51fb\u6740\u8981\u6c42 &b: &f\u6253\u6211\u901a\u5173 &b> &f1"
+    - "&f\u901a\u5173\u5956\u52b1 &b: &f\u89e3\u9501\u5173\u5361 &b> &fSTAGE_A5  &f\u6052\
+      \u77f3 &b> &f1"
+    finished_reward_commands: {}
+    finished_reward_items:
+    - REWARD_A4:1
+    finished_deblocking_stages:
+    - STAGE_A5
+  STAGE_A5:
+    spawn_loc:
+      world: w_instance_0
+      x: 1420.5434701429322
+      y: 8.0
+      z: -676.3768837317244
+      yaw: -122.73804
+      pitch: 12.750024
+    challenges:
+    - MOB_A7:6
+    confirm_messages:
+    - ''
+    - "&d你即将挑战副本关卡,请仔细\
+      阅读以下信息,准备好了请点击\
+      按钮进入~"
+    - "&c本关没有通关物品奖励,你需\
+      要通过击杀怪物来概率获得RPG怪\
+      物掉落物."
+    - "&f关卡代码 &b: &fSTAGE_A5"
+    - "&f难度系数 &b: &f1.0"
+    - "&f击杀要求 &b: &f巨型史莱姆(70%) &b> &f6"
+    - "&f爆物概率 &b: &f女娲石 &b> &f70%"
+    - "&f通关奖励 &b: &f解锁\u5173\u5361 &b> &fSTAGE_A6"
+    finished_confirm_spawn: true
+    finished_reward_commands: {}
+    finished_reward_items: {}
+    finished_deblocking_stages:
+    - STAGE_A6
+  STAGE_A6:
+    spawn_loc:
+      world: w_instance_0
+      x: 1151.5505991407758
+      y: 120.0
+      z: -833.4313606071896
+      yaw: -0.9380188
+      pitch: 8.549995
+    challenges:
+    - MOB_A7:6
+    confirm_messages:
+    - ''
+    - "&d你即将挑战副本关卡,请仔细\
+      阅读以下信息,准备好了请点击\
+      按钮进入~"
+    - "&c本关没有通关物品奖励,你需\
+      要通过击杀怪物来概率获得RPG怪\
+      物掉落物."
+    - "&f关卡代码 &b: &fSTAGE_A6"
+    - "&f难度系数 &b: &f1.0"
+    - "&f击杀要求 &b: &f二级僵尸 &b> &f30"
+    - "&f爆物概率 &b: &f凤凰石 &b> &f25%"
+    - "&f通关奖励 &b: &f解锁关卡 &b> &fSTAGE_A7"
+    finished_confirm_spawn: true
+    finished_reward_commands: {}
+    finished_reward_items: {}
+    finished_deblocking_stages:
+    - STAGE_A7

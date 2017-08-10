@@ -23,6 +23,7 @@ import java.text.SimpleDateFormat;
  * Created by July_ on 2017/7/4.
  */
 public class CreeperRpgSystem extends JavaPlugin {
+    private static final String[] SUB_DATA_FOLDERS = new String[] {"playerdata", "stages", "markets"};
     private static final PluginManager PLUGIN_MANAGER = Bukkit.getPluginManager();
     private boolean firstLoad = true;
     private static CreeperRpgSystem instance;

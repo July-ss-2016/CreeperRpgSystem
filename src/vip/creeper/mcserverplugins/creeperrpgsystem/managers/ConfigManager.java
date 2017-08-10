@@ -15,7 +15,7 @@ import java.util.Map;
  * Created by July_ on 2017/7/7.
  */
 public class ConfigManager {
-    private static final List<String> CONFIG_SUBFILE_NAMES = Arrays.asList("PluginConfig.yml", "StageConfig.yml", "MarketConfig.yml");
+    private static final List<String> CONFIG_SUBFILE_NAMES = Arrays.asList("config.yml", "stages_0_8.yml", "markets_0_8.yml");
     private static final HashMap<ConfigType, RpgConfig> configs = new HashMap<>();
 
     // 载入配置
@@ -40,16 +40,6 @@ public class ConfigManager {
         if (!configDataFolder.exists()) {
             configDataFolder.mkdirs();
             MsgUtil.info("文件(夹) = " + configDataFolder.getAbsolutePath() + " 被创建.");
-        }
-
-        // 拷贝资源
-        for (String configFileName : CONFIG_SUBFILE_NAMES) {
-            File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + configFileName);
-
-            if (!file.exists()) {
-                FileUtil.copySrcFile(configFileName, FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + configFileName);
-                MsgUtil.info("文件(夹) = " + file.getAbsolutePath() + " 被创建.");
-            }
         }
 
         for (Map.Entry<ConfigType, RpgConfig> entry : configs.entrySet()) {

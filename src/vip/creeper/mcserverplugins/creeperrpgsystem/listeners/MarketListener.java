@@ -53,23 +53,6 @@ public class MarketListener implements Listener {
         }
     }
 
-    // 事件_攻击马
-    @EventHandler
-    public void onDamageHorseEvent(EntityDamageByEntityEvent event) {
-        Entity damager = event.getDamager();
-
-        if (!(damager instanceof  Player)) {
-            return;
-        }
-
-        Entity target = event.getEntity();
-
-        if (MarketManager.isMarketWorld(target.getWorld().getName()) && (target instanceof  Horse)) {
-            MsgUtil.sendMsg(damager, "&c打个屁!");
-            event.setCancelled(true);
-        }
-    }
-
     // 事件_下马
     @EventHandler
     public void onPlayerLeaveHorseEvent(VehicleExitEvent event) {
@@ -81,7 +64,7 @@ public class MarketListener implements Listener {
             Entity veh = player.getVehicle();
 
             if (MarketManager.isMarketWorld(world) && veh != null && veh.getType() == EntityType.HORSE) {
-                veh.remove();
+                veh.remove(); //
             }
         }
     }

@@ -10,3 +10,8 @@ stage_whitelist_commands:
 - '/crs'
 - '/spawn'
 - '/we cui'
+first_join_items:
+- 'ITEM_A0'
+no_damage_worlds:
+- 'world'
+- 'w_plot_0'

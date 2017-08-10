@@ -60,7 +60,7 @@ public class Market {
 
     // 设置出生点
     public boolean setSpawnLocation(Location loc) {
-        File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "MarketConfig.yml");
+        File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "markets_0_8.yml");
         return ConfigUtil.setLocConfig(file, "markets." + marketCode + ".spawn_loc", loc);
     }
 }

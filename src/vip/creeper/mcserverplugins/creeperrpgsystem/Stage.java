@@ -114,7 +114,7 @@ public class Stage {
 
     // 设置关卡出生点
     public boolean setSpawnLoc(Location loc) {
-        File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "StageConfig.yml");
+        File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "stages_0_8.yml");
         return ConfigUtil.setLocConfig(file, "stages." + this.stageCode + ".spawn_loc", loc);
     }
 
