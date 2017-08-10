@@ -32,27 +32,27 @@ public class RpgPlayer {
         this.playerDataYml = YamlConfiguration.loadConfiguration(playerDataFile);
     }
 
-    // 得到playerName
+    //得到playerName
     public String getPlayerName() {
         return this.playerName;
     }
 
-    // 得到Player
+    //得到Player
     public Player getPlayer() {
         return Bukkit.getPlayer(this.playerName);
     }
 
-    // 得到玩家关卡解锁状态
+    //得到玩家关卡解锁状态
     public boolean getStageState(String stageCode) {
         return this.getDeblockingStages().contains(stageCode);
     }
 
-    // 得到通过的关卡
+    //得到通过的关卡
     public List<String> getDeblockingStages() {
         return playerDataYml.getStringList("stage.deblocking_stages");
     }
 
-    // 设置关卡通过状态
+    //设置关卡通过状态
     public boolean setStageState(String stageCode, boolean state) {
         if (!StageManager.isExistsStage(stageCode)) {
             return false;
@@ -67,7 +67,7 @@ public class RpgPlayer {
         MsgUtil.warring();
 
         if (state) {
-            // 禁止重复
+            //禁止重复
             if (temp.contains(stageCode)) {
                 return false;
             }
@@ -81,7 +81,7 @@ public class RpgPlayer {
 
     }
 
-    // 是否第一次玩
+    //是否第一次玩
     public boolean isFirstPlayed() {
         return playerDataYml.getBoolean("first_played", true);
     }
@@ -91,7 +91,7 @@ public class RpgPlayer {
         return saveYml();
     }
 
-    // 保存Yml
+    //保存Yml
     private boolean saveYml() {
         try {
             playerDataYml.save(playerDataFile);

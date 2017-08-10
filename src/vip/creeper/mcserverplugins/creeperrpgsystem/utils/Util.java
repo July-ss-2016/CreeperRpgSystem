@@ -20,22 +20,22 @@ import java.util.Date;
 public class Util {
     private static Settings settings = CreeperRpgSystem.getInstance().getSettings();
 
-    // 判断是否为玩家
+    //判断是否为玩家
     public static boolean isPlayer(final CommandSender cs) {
         return (cs instanceof Player);
     }
 
-    // 判断是否为管理员
+    //判断是否为管理员
     public static boolean isAdmin(Player player) {
         return player.hasPermission("CreeperRpgSystem.admin");
     }
 
-    // 回主城
+    //回主城
     public static void teleportToServerSpawnPoint(Player player) {
         player.teleport(settings.serverSpawnLocation);
     }
 
-    // 产生烟花
+    //产生烟花
     public static void spawnFirework(Location loc) {
         Firework firework = (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK);
         FireworkMeta fireworkMeta = firework.getFireworkMeta();
@@ -48,7 +48,7 @@ public class Util {
         //firework.detonate();
     }
 
-    // 得到插件创建时间
+    //得到插件创建时间
     public static Date getPluginCreationDate() {
         File file = new File(CreeperRpgSystem.class.getProtectionDomain().getCodeSource().getLocation().getPath());
 

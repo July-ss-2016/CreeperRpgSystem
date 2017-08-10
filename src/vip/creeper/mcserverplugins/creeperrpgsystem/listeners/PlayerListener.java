@@ -28,18 +28,18 @@ public class PlayerListener implements Listener {
     private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
     private static Settings settings = plugin.getSettings();
 
-    // 事件_玩家进入
+    //事件_玩家进入
     @EventHandler
     public void onPlayerJoinEvent(PlayerJoinEvent event) {
         Player player = event.getPlayer();
         RpgPlayer rpgPlayer = RpgPlayerManager.getRpgPlayer(player.getName());
         PlayerInventory playerInventory = player.getInventory();
 
-        // 必须用同步线程
+        //必须用同步线程
         Bukkit.getScheduler().runTask(plugin, () -> {
             Util.teleportToServerSpawnPoint(player);
 
-            // 第一次登录
+            //第一次登录
             if (rpgPlayer.isFirstPlayed()) {
                 int i = 0;
 
@@ -55,7 +55,7 @@ public class PlayerListener implements Listener {
                     i++;
                 }
 
-                // 设置非第一次登录
+                //设置非第一次登录
                 rpgPlayer.setFirstPlayed(false);
 
                 MsgUtil.sendMsg(player,"您已获得Rpg新手礼包~");
@@ -64,7 +64,7 @@ public class PlayerListener implements Listener {
 
     }
 
-    // 事件_玩家下线
+    //事件_玩家下线
     @EventHandler
     public void onPlayerQuitEvent(PlayerQuitEvent event) {
         Player player = event.getPlayer();
@@ -72,7 +72,7 @@ public class PlayerListener implements Listener {
         RpgPlayerManager.unregisterPlayer(player);
     }
 
-    // 事件_指令输入
+    //事件_指令输入
     @EventHandler
     public void onPlayerCommandProcessEvent(PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();

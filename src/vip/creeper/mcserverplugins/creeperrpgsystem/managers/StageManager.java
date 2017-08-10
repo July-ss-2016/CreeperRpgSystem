@@ -51,28 +51,28 @@ public class StageManager {
         return true;
     }
 
-    // 通过关卡代码得到关卡
+    //通过关卡代码得到关卡
     public static Stage getStage(String stageCode) {
         return stages.getOrDefault(stageCode, null);
     }
 
-    // 判断是否存在关卡
+    //判断是否存在关卡
     public static boolean isExistsStage(String stageCode) {
         return stages.containsKey(stageCode);
     }
 
-    // 得到所有关卡
+    //得到所有关卡
     public static HashMap<String, Stage> getStages() {
         return stages;
     }
 
-    // 注销所有关卡
+    //注销所有关卡
     public static void unregisterAllStages() {
         stages.clear();
         stageWorlds.clear();
     }
 
-    // 注册关卡
+    //注册关卡
     public static void registerStage(Stage stage) {
         stages.put(stage.getStageCode(), stage);
 
@@ -83,17 +83,17 @@ public class StageManager {
         }
     }
 
-    // 添加某玩家未完待续的关卡
+    //添加某玩家未完待续的关卡
     public static void addUnfinishedStagePlayer(String playerName, String stageCode) {
         unfinishedStagePlayers.put(playerName, stageCode);
     }
 
-    // 得到某玩家未完待续的关卡
+    //得到某玩家未完待续的关卡
     public static String getUnfinishedStage(String playerName) {
         return unfinishedStagePlayers.get(playerName);
     }
 
-    // 判断是否为关卡世界
+    //判断是否为关卡世界
     public static boolean isStageWorld(String worldName) {
         return stageWorlds.contains(worldName);
     }

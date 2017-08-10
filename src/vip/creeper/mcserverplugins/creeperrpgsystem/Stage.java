@@ -43,66 +43,66 @@ public class Stage {
         this.finishedConfirmSpawn = finishedConfirmSpawn;
     }
 
-    // 是否完成任务时要确认过才能回主城
+    //是否完成任务时要确认过才能回主城
     public boolean isFinishedConfirmSpawn() {
         return this.finishedConfirmSpawn;
     }
 
-    // 是否为免费关卡
+    //是否为免费关卡
     public boolean isFreeStage() {
         return this.freeStage;
     }
 
-    // 得到出生点
+    //得到出生点
     public Location getSpawnLoc() {
         return this.spawnLoc;
     }
 
-    // 得到关卡代码
+    //得到关卡代码
     public String getStageCode() {
         return this.stageCode;
     }
 
-    // 得到完成任务奖励的物品
+    //得到完成任务奖励的物品
     public HashMap<Optional<MythicItem>, Integer> getFinishedRewardItems() {
         return this.finishedRewardItems;
     }
 
-    // 得到任务
+    //得到任务
     public HashMap<String, Integer> getChallenges() {
         return this.challenges;
     }
 
-    // 得到确认信息
+    //得到确认信息
     public List<String> getConfirmMessages() {
         return this.confirmMessages;
     }
 
-    // 得到任务完成执行的指令
+    //得到任务完成执行的指令
     public List<String> getFinishedRewardCommands() {
         return this.finishedRewardCommands;
     }
 
-    // 得到任务完成解锁的关卡
+    //得到任务完成解锁的关卡
     public List<String> getFinishedDeblockingStages() {
         return this.finishedDeblockingStages;
     }
 
-    // 得到玩家关卡解锁状态
+    //得到玩家关卡解锁状态
     public boolean getPlayerStageState(String playerName) {
         return RpgPlayerManager.getRpgPlayer(playerName).getStageState(this.stageCode);
     }
 
-    // 关卡传送
+    //关卡传送
     public void tp(Player player) {
         StageEnterEvent event = new StageEnterEvent(player, this);
         Bukkit.getPluginManager().callEvent(event);
 
-        // 传送到本关卡出生点
+        //传送到本关卡出生点
         player.teleport(this.spawnLoc);
     }
 
-    // 发送去人信息
+    //发送去人信息
     public void sendConfirmTpMsg(Player player) {
         for (String confirmMessage : confirmMessages) {
             MsgUtil.sendReplacedVarMsg(player, confirmMessage);
@@ -112,25 +112,25 @@ public class Stage {
         MsgUtil.sendReplacedVarMsg(player, "");
     }
 
-    // 设置关卡出生点
+    //设置关卡出生点
     public boolean setSpawnLoc(Location loc) {
         File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "stages_0_8.yml");
         return ConfigUtil.setLocConfig(file, "stages." + this.stageCode + ".spawn_loc", loc);
     }
 
-    // 判断是否为任务怪物
+    //判断是否为任务怪物
     public boolean isChallengeMob(String mobCode) {
         return challenges.containsKey(mobCode);
     }
 
-    // 执行完成任务的命令
+    //执行完成任务的命令
     public void performFinishedRewardCommands(final Player player) {
         for (String cmd : this.finishedRewardCommands) {
             Bukkit.dispatchCommand(Bukkit.getConsoleSender(), MsgUtil.getReplacedVariableMsg(cmd, player));
         }
     }
 
-    // 给予完成任务奖励的物品
+    //给予完成任务奖励的物品
     public boolean giveFinishedRewardItems(Player player) {
         if (isNoFinishedRewardItem()) {
             return true;

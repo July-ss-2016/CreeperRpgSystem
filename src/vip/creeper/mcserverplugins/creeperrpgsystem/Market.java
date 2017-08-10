@@ -27,38 +27,38 @@ public class Market {
         this.enterGiveHorse = enterGiveHorse;
     }
 
-    // 得到集市代码
+    //得到集市代码
     public String getMarketCode() {
         return marketCode;
     }
 
-    // 得到出生点
+    //得到出生点
     public Location getSpawnLoc() {
         return this.spawnLoc;
     }
 
-    // 得到商店名
+    //得到商店名
     public String getDisplayName() {
         return this.displayName;
     }
 
-    // 得到欢迎信息
+    //得到欢迎信息
     public String getWelcomeMsg() {
         return this.welcomeMsg;
     }
 
-    // 得到是否进入给马
+    //得到是否进入给马
     public boolean getEnterGiveHorse() {
         return this.enterGiveHorse;
     }
 
-    // 传送至关卡出生点
+    //传送至关卡出生点
     public void tp(Player player) {
         player.teleport(spawnLoc);
         Bukkit.getPluginManager().callEvent(new MarketEnterEvent(player, this));
     }
 
-    // 设置出生点
+    //设置出生点
     public boolean setSpawnLocation(Location loc) {
         File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "markets_0_8.yml");
         return ConfigUtil.setLocConfig(file, "markets." + marketCode + ".spawn_loc", loc);

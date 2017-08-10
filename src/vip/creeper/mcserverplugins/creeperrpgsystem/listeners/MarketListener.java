@@ -30,7 +30,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 public class MarketListener implements Listener {
     private  static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
 
-    // 事件_进入集市
+    //事件_进入集市
     @EventHandler
     public void onMarketEnterEvent(MarketEnterEvent event) {
         Player player = event.getPlayer();
@@ -44,8 +44,8 @@ public class MarketListener implements Listener {
 
             horse.setAge(10);
             horse.addPotionEffect(new PotionEffect(PotionEffectType.SPEED, Integer.MAX_VALUE, 2, true));
-            horse.setVariant(Horse.Variant.MULE); // 骡子
-            horse.setTamed(true); // 设置为驯服状态
+            horse.setVariant(Horse.Variant.MULE); //骡子
+            horse.setTamed(true); //设置为驯服状态
             horse.setColor(Horse.Color.BLACK);
             horse.getInventory().setSaddle(new ItemStack(Material.SADDLE));
 
@@ -53,7 +53,7 @@ public class MarketListener implements Listener {
         }
     }
 
-    // 事件_下马
+    //事件_下马
     @EventHandler
     public void onPlayerLeaveHorseEvent(VehicleExitEvent event) {
         Entity entity = event.getExited();
@@ -69,7 +69,7 @@ public class MarketListener implements Listener {
         }
     }
 
-    // 事件_点击马背包
+    //事件_点击马背包
     @EventHandler
     public void onInvClickEvent(InventoryClickEvent event) {
         Player player = (Player)event.getWhoClicked();
@@ -86,7 +86,7 @@ public class MarketListener implements Listener {
         }
     }
 
-    // 事件_禁止攻击生物
+    //事件_禁止攻击生物
     @EventHandler
     public void onHorseDamageEvent(EntityDamageByEntityEvent event) {
         Entity damager = event.getDamager();

@@ -21,26 +21,24 @@ public class PluginConfig implements RpgConfig {
     private static Settings settings =  plugin.getSettings();
 
     public void loadConfig() {
-        Bukkit.getScheduler().runTask(plugin, () -> {
-            File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "config.yml");
+        File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "config.yml");
 
-            if (!file.exists()) {
-                FileUtil.copySrcFile("config.yml", file.getAbsolutePath());
-            }
+        if (!file.exists()) {
+            FileUtil.copySrcFile("config.yml", file.getAbsolutePath());
+        }
 
-            YamlConfiguration rootYml = YamlConfiguration.loadConfiguration(file);
-            ConfigurationSection spawnLocSection = rootYml.getConfigurationSection("server_spawn_loc");//服务器出生点Sec
-            settings.configVersion = rootYml.getString("version");
-            settings.serverSpawnLocation = new Location(Bukkit.getWorld(spawnLocSection.getString("world")), spawnLocSection.getDouble("x"), spawnLocSection.getDouble("y"), spawnLocSection.getDouble("z"),
-                    Float.parseFloat(spawnLocSection.getString("yaw")), Float.parseFloat(spawnLocSection.getString("pitch")));
-            settings.stageWhitelistCommands = rootYml.getStringList("stage_whitelist_commands");
-            settings.firstJoinItems = rootYml.getStringList("first_join_items");
-            settings.noDamageWorlds = rootYml.getStringList("no_damage_worlds");
-            MsgUtil.info("插件配置被载入.");
-        });
+        YamlConfiguration rootYml = YamlConfiguration.loadConfiguration(file);
+        ConfigurationSection spawnLocSection = rootYml.getConfigurationSection("server_spawn_loc");//服务器出生点Sec
+        settings.configVersion = rootYml.getString("version");
+        settings.serverSpawnLocation = new Location(Bukkit.getWorld(spawnLocSection.getString("world")), spawnLocSection.getDouble("x"), spawnLocSection.getDouble("y"), spawnLocSection.getDouble("z"),
+                Float.parseFloat(spawnLocSection.getString("yaw")), Float.parseFloat(spawnLocSection.getString("pitch")));
+        settings.stageWhitelistCommands = rootYml.getStringList("stage_whitelist_commands");
+        settings.firstJoinItems = rootYml.getStringList("first_join_items");
+        settings.noDamageWorlds = rootYml.getStringList("no_damage_worlds");
+        MsgUtil.info("插件配置被载入.");
     }
 
-    // 设置服务器出生点
+    //设置服务器出生点
     public boolean setServerSpawnLoc(Location loc) {
         File file = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "configs" + File.separator + "config.yml");
 
