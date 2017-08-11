@@ -13,7 +13,7 @@ public class StageLeaveEvent extends Event {
     private Player player;
     private Stage stage;
 
-    public StageLeaveEvent(Player player, Stage stage) {
+    public StageLeaveEvent(final Player player, final Stage stage) {
         this.player = player;
         this.stage = stage;
     }

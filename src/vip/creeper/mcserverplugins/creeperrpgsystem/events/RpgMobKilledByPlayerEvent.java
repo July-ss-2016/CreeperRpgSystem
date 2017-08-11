@@ -13,7 +13,7 @@ public class RpgMobKilledByPlayerEvent extends Event {
     private Player killer;
     private MythicMob mythicMob;
 
-    public RpgMobKilledByPlayerEvent(Player killer, MythicMob mythicMob) {
+    public RpgMobKilledByPlayerEvent(final Player killer, final MythicMob mythicMob) {
         this.killer = killer;
         this.mythicMob = mythicMob;
     }

@@ -8,11 +8,16 @@ import java.util.HashMap;
  * Created by July_ on 2017/7/9.
  */
 public class MarketManager {
-    private static HashMap<String, Market> stageCodeForMarkets = new HashMap<>();
-    private static HashMap<String, Market> worldNameForMarkets = new HashMap<>();
+    private HashMap<String, Market> stageCodeForMarkets;
+    private HashMap<String, Market> worldNameForMarkets;
+
+    public MarketManager() {
+        this.stageCodeForMarkets = new HashMap<>();
+        this.worldNameForMarkets = new HashMap<>();
+    }
 
     //注册集市
-    public static void registerMarket(final Market market) {
+    public void registerMarket(final Market market) {
         String marketCode = market.getMarketCode();
 
         stageCodeForMarkets.put(marketCode, market);
@@ -20,32 +25,32 @@ public class MarketManager {
     }
 
     //判断是否存在集市
-    public static boolean isExistsMarket(final String marketCode) {
+    public boolean isExistsMarket(final String marketCode) {
         return stageCodeForMarkets.containsKey(marketCode);
     }
 
     //通过世界名获得集市
-    public static Market getMarketByWorldName(final String worldName) {
+    public Market getMarketByWorldName(final String worldName) {
         return worldNameForMarkets.getOrDefault(worldName, null);
     }
 
     //通过集市代码获得集市
-    public static Market getMarketByMarketCode(final String marketCode) {
+    public Market getMarketByMarketCode(final String marketCode) {
         return stageCodeForMarkets.getOrDefault(marketCode, null);
     }
 
     //得到所有集市
-    public static HashMap<String, Market> getMarkets() {
+    public HashMap<String, Market> getMarkets() {
         return stageCodeForMarkets;
     }
 
     //根据世界名判断是否为集市世界
-    public static boolean isMarketWorld(final String worldName) {
+    public boolean isMarketWorld(final String worldName) {
         return worldNameForMarkets.containsKey(worldName);
     }
 
     //注销所有集市
-    public static void unregisterAllMarkets() {
+    public void unregisterAllMarkets() {
         stageCodeForMarkets.clear();
         worldNameForMarkets.clear();
     }

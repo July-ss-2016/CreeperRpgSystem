@@ -11,7 +11,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
  */
 public class InventoryCommand implements RpgCommand {
 
-    public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
+    public boolean execute(final CommandSender cs, final Command cmd, final String lable, final String[] args) {
 
         if (args.length == 2 && args[1].equalsIgnoreCase("closeself")) {
 

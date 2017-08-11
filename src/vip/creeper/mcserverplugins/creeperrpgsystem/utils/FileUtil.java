@@ -13,7 +13,7 @@ public class FileUtil {
     public static final String PLUGIN_DATA_FOLDER_PATH = plugin.getDataFolder().getAbsolutePath();
 
     //从jar包复制文件
-    public static boolean copySrcFile(String srcFilePath, String localFilePath) {
+    public static boolean copySrcFile(final String srcFilePath, final String localFilePath) {
         try {
             InputStream is = plugin.getClass().getClassLoader().getResourceAsStream(srcFilePath); //读取文件内容
             InputStreamReader reader = new InputStreamReader(is, "UTF-8");
@@ -36,7 +36,7 @@ public class FileUtil {
     }
 
     //写文件
-    private static boolean writeFile(String path, String data) {
+    private static boolean writeFile(final String path, final String data) {
         File file = new File(path);
 
         try {
@@ -59,7 +59,7 @@ public class FileUtil {
     }
 
     //得到玩家数据file
-    public static File getPlayerDataFile(String player) {
+    public static File getPlayerDataFile(final String player) {
         return new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "playerdata" + File.separator + player + ".yml");
     }
 }

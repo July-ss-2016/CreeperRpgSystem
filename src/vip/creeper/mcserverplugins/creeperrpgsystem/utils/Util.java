@@ -26,17 +26,17 @@ public class Util {
     }
 
     //判断是否为管理员
-    public static boolean isAdmin(Player player) {
+    public static boolean isAdmin(final Player player) {
         return player.hasPermission("CreeperRpgSystem.admin");
     }
 
     //回主城
-    public static void teleportToServerSpawnPoint(Player player) {
+    public static void teleportToServerSpawnPoint(final Player player) {
         player.teleport(settings.serverSpawnLocation);
     }
 
     //产生烟花
-    public static void spawnFirework(Location loc) {
+    public static void spawnFirework(final Location loc) {
         Firework firework = (Firework) loc.getWorld().spawnEntity(loc, EntityType.FIREWORK);
         FireworkMeta fireworkMeta = firework.getFireworkMeta();
         FireworkEffect fireworkEffect = FireworkEffect.builder().withColor(Color.GREEN).withColor(Color.PURPLE).withColor(Color.RED).withColor(Color.ORANGE).with(FireworkEffect.Type.STAR).withFade(Color.YELLOW).withFade(Color.RED).withTrail().build();

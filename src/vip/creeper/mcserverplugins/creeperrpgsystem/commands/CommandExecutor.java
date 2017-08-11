@@ -11,9 +11,13 @@ import java.util.HashMap;
  * Created by July_ on 2017/7/16.
  */
 public class CommandExecutor implements org.bukkit.command.CommandExecutor {
-    private HashMap<String, RpgCommand> commands = new HashMap<String, RpgCommand>();
+    private HashMap<String, RpgCommand> commands;
 
-    public boolean onCommand(CommandSender cs, Command cmd, String lable, String[] args) {
+    public CommandExecutor() {
+        this.commands = new HashMap<>();
+    }
+
+    public boolean onCommand(final CommandSender cs, final Command cmd, final String lable, final String[] args) {
         if (args.length >= 1) {
             String firstArg = args[0].toLowerCase();
 
@@ -28,7 +32,7 @@ public class CommandExecutor implements org.bukkit.command.CommandExecutor {
         return  false;
     }
 
-    public void registerCommand(String firstArg, RpgCommand cmd) {
+    public void registerCommand(final String firstArg, final RpgCommand cmd) {
         commands.put(firstArg.toLowerCase(), cmd);
     }
 }

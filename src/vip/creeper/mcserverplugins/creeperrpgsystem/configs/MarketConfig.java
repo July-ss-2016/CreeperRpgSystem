@@ -4,9 +4,9 @@ import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.file.YamlConfiguration;
+import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Market;
-import vip.creeper.mcserverplugins.creeperrpgsystem.RpgConfig;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
+import vip.creeper.mcserverplugins.creeperrpgsystem.Config;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
@@ -17,9 +17,9 @@ import java.util.Map;
 /**
  * Created by July_ on 2017/7/9.
  */
-public class MarketConfig implements RpgConfig {
+public class MarketConfig implements Config {
     public void loadConfig() {
-        MarketManager.unregisterAllMarkets();
+        CreeperRpgSystem.getInstance().getMarketManager().unregisterAllMarkets();
 
         File marketFolder = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "markets");
         File[] marketFolderFiles = marketFolder.listFiles();
@@ -48,7 +48,7 @@ public class MarketConfig implements RpgConfig {
                 Location marketSpawnLoc = new Location(Bukkit.getWorld(worldName), marketSpawnLocSection.getDouble("x"), marketSpawnLocSection.getDouble("y"), marketSpawnLocSection.getDouble("z"),
                         Float.parseFloat(marketSpawnLocSection.getString("yaw")), Float.parseFloat(marketSpawnLocSection.getString("pitch")));
 
-                MarketManager.registerMarket(new Market(key, marketSpawnLoc, marketSection.getString("display_name"), marketSection.getString("welcome_msg"), marketSection.getBoolean("enter_give_horse")));
+                CreeperRpgSystem.getInstance().getMarketManager().registerMarket(new Market(key, marketSpawnLoc, marketSection.getString("display_name"), marketSection.getString("welcome_msg"), marketSection.getBoolean("enter_give_horse")));
                 MsgUtil.info("集市 = " + key + " 被载入.");
             }
         }

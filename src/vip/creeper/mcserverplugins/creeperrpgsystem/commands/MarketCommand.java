@@ -3,8 +3,8 @@ package vip.creeper.mcserverplugins.creeperrpgsystem.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
+import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.RpgCommand;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 
@@ -13,7 +13,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
  */
 public class MarketCommand implements RpgCommand {
 
-    public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
+    public boolean execute(final CommandSender cs, final Command cmd, final String lable, final String[] args) {
         String marketCode = args[2];
 
         if (args.length == 3) {
@@ -25,12 +25,12 @@ public class MarketCommand implements RpgCommand {
 
                 Player player = (Player) cs;
 
-                if (!MarketManager.isExistsMarket(marketCode)) {
+                if (!CreeperRpgSystem.getInstance().getMarketManager().isExistsMarket(marketCode)) {
                     MsgUtil.sendMsg(player, "&c不存在该集市.");
                     return true;
                 }
 
-                MarketManager.getMarketByMarketCode(marketCode).tp(player);
+                CreeperRpgSystem.getInstance().getMarketManager().getMarketByMarketCode(marketCode).tp(player);
                 return true;
             }
         }

@@ -10,7 +10,7 @@ import org.bukkit.entity.Player;
 import org.bukkit.event.Event;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
-import org.bukkit.event.entity.EntityDamageByEntityEvent;
+import org.bukkit.event.entity.EntityDamageEvent;
 import org.bukkit.event.inventory.InventoryClickEvent;
 import org.bukkit.event.vehicle.VehicleExitEvent;
 import org.bukkit.inventory.Inventory;
@@ -20,18 +20,21 @@ import org.bukkit.potion.PotionEffectType;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Market;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.MarketEnterEvent;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.MarketManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 /**
  * Created by July_ on 2017/7/5.
  */
 public class MarketListener implements Listener {
-    private  static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
+    private CreeperRpgSystem plugin;
+
+    public MarketListener(final CreeperRpgSystem plugin) {
+        this.plugin = plugin;
+    }
 
     //事件_进入集市
     @EventHandler
-    public void onMarketEnterEvent(MarketEnterEvent event) {
+    public void onMarketEnterEvent(final MarketEnterEvent event) {
         Player player = event.getPlayer();
         Market market = event.getMarket();
         Location loc = player.getLocation();
@@ -54,7 +57,7 @@ public class MarketListener implements Listener {
 
     //事件_下马
     @EventHandler
-    public void onPlayerLeaveHorseEvent(VehicleExitEvent event) {
+    public void onPlayerLeaveHorseEvent(final VehicleExitEvent event) {
         Entity entity = event.getExited();
 
         if (entity instanceof  Player) {
@@ -62,7 +65,7 @@ public class MarketListener implements Listener {
             String world = player.getWorld().getName();
             Entity veh = player.getVehicle();
 
-            if (MarketManager.isMarketWorld(world) && veh != null && veh.getType() == EntityType.HORSE) {
+            if (CreeperRpgSystem.getInstance().getMarketManager().isMarketWorld(world) && veh != null && veh.getType() == EntityType.HORSE) {
                 veh.remove(); //
             }
         }
@@ -70,7 +73,7 @@ public class MarketListener implements Listener {
 
     //事件_点击马背包
     @EventHandler
-    public void onInvClickEvent(InventoryClickEvent event) {
+    public void onInvClickEvent(final InventoryClickEvent event) {
         Player player = (Player)event.getWhoClicked();
         Inventory inv = event.getClickedInventory();
 
@@ -78,7 +81,7 @@ public class MarketListener implements Listener {
             return;
         }
 
-        if (MarketManager.isMarketWorld(player.getWorld().getName()) && "Mule".equals(inv.getTitle())) {
+        if (CreeperRpgSystem.getInstance().getMarketManager().isMarketWorld(player.getWorld().getName()) && "Mule".equals(inv.getTitle())) {
             event.setCancelled(true);
             event.setResult(Event.Result.DENY);
             MsgUtil.sendMsg(player, "&c谁允许你拿的!");
@@ -87,8 +90,8 @@ public class MarketListener implements Listener {
 
     //事件_禁止攻击生物
     @EventHandler
-    public void onHorseDamageEvent(EntityDamageByEntityEvent event) {
-        if (event.getEntityType() == EntityType.HORSE && MarketManager.isMarketWorld(event.getDamager().getWorld().getName())) {
+    public void onHorseDamageEvent(final EntityDamageEvent event) {
+        if (event.getEntityType() == EntityType.HORSE) {
             event.setCancelled(true);
         }
     }

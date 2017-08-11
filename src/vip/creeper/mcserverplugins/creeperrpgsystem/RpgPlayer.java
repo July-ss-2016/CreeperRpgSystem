@@ -3,7 +3,6 @@ package vip.creeper.mcserverplugins.creeperrpgsystem;
 import org.bukkit.Bukkit;
 import org.bukkit.configuration.file.YamlConfiguration;
 import org.bukkit.entity.Player;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
 
 import java.io.File;
 import java.io.IOException;
@@ -53,7 +52,7 @@ public class RpgPlayer {
 
     //设置关卡通过状态
     public boolean setStageState(final String stageCode, final boolean state) {
-        if (!StageManager.isExistsStage(stageCode)) {
+        if (!CreeperRpgSystem.getInstance().getStageManager().isExistsStage(stageCode)) {
             return false;
         }
 

@@ -14,8 +14,6 @@ import org.bukkit.inventory.PlayerInventory;
 import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.RpgPlayer;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Settings;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.RpgPlayerManager;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 
@@ -25,16 +23,21 @@ import java.util.Optional;
  * Created by July_ on 2017/7/15.
  */
 public class PlayerListener implements Listener {
-    private static CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
-    private static Settings settings = plugin.getSettings();
+    private CreeperRpgSystem plugin;
+    private Settings settings;
+
+    public PlayerListener(final CreeperRpgSystem plugin) {
+        this.plugin = plugin;
+        this.settings = plugin.getSettings();
+    }
 
     //事件_玩家进入
     @EventHandler
-    public void onPlayerJoinEvent(PlayerJoinEvent event) {
+    public void onPlayerJoinEvent(final PlayerJoinEvent event) {
         //必须用同步线程
         Bukkit.getScheduler().runTask(plugin, () -> {
             Player player = event.getPlayer();
-            RpgPlayer rpgPlayer = RpgPlayerManager.getRpgPlayer(player.getName());
+            RpgPlayer rpgPlayer = CreeperRpgSystem.getInstance().getRpgPlayerManager().getRpgPlayer(player.getName());
             PlayerInventory playerInventory = player.getInventory();
 
             Util.teleportToServerSpawnPoint(player);
@@ -65,19 +68,19 @@ public class PlayerListener implements Listener {
 
     //事件_玩家下线
     @EventHandler
-    public void onPlayerQuitEvent(PlayerQuitEvent event) {
+    public void onPlayerQuitEvent(final PlayerQuitEvent event) {
         Player player = event.getPlayer();
 
-        RpgPlayerManager.unregisterPlayer(player);
+        CreeperRpgSystem.getInstance().getRpgPlayerManager().unregisterPlayer(player);
     }
 
     //事件_指令输入
     @EventHandler
-    public void onPlayerCommandProcessEvent(PlayerCommandPreprocessEvent event) {
+    public void onPlayerCommandProcessEvent(final PlayerCommandPreprocessEvent event) {
         Player player = event.getPlayer();
         String msg = event.getMessage().toLowerCase();
 
-        if (!StageManager.isStageWorld(player.getWorld().getName()) || Util.isAdmin(player)) {
+        if (!CreeperRpgSystem.getInstance().getStageManager().isStageWorld(player.getWorld().getName()) || Util.isAdmin(player)) {
             return;
         }
 

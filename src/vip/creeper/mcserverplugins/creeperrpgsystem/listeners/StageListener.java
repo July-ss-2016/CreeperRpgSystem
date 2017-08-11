@@ -17,8 +17,6 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.RpgPlayer;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
 import vip.creeper.mcserverplugins.creeperrpgsystem.StageMobKillingCounter;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.*;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.RpgPlayerManager;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.Util;
 
@@ -28,27 +26,33 @@ import java.util.HashMap;
  * Created by July_ on 2017/7/7.
  */
 public class StageListener implements Listener {
-    private CreeperRpgSystem plugin = CreeperRpgSystem.getInstance();
-    private BukkitAPIHelper mythicMobApi = MythicMobs.inst().getAPIHelper();
-    private HashMap<String, StageMobKillingCounter> playerStageMobCounters = new HashMap<>(); //玩家名对应怪物单关卡击杀数统计器
+    private CreeperRpgSystem plugin;
+    private BukkitAPIHelper mythicMobApi;
+    private HashMap<String, StageMobKillingCounter> playerStageKillingMobCounters; //玩家名对应怪物单关卡击杀数统计器
+
+    public StageListener(final CreeperRpgSystem plugin) {
+        this.plugin = plugin;
+        this.mythicMobApi = MythicMobs.inst().getAPIHelper();
+        this.playerStageKillingMobCounters = new HashMap<>();
+    }
 
     //事件_RPG怪物被击杀
     @EventHandler
-    public void onRpgMobKilledByPlayerEvent(RpgMobKilledByPlayerEvent event) {
+    public void onRpgMobKilledByPlayerEvent(final RpgMobKilledByPlayerEvent event) {
         Player player = event.getKiller();
         String playerName = player.getName();
         MythicMob mythicMob = event.getMythicMob();
         String mobCode = mythicMob.getInternalName();
 
         //为了安全先判断玩家是否有计数器
-        if (!playerStageMobCounters.containsKey(playerName)) {
+        if (!playerStageKillingMobCounters.containsKey(playerName)) {
             Util.teleportToServerSpawnPoint(player);
             MsgUtil.sendMsg(player, "&c系统错误:怪物计数器不存在.");
             return;
         }
 
 
-        StageMobKillingCounter stageMobKillingCounter = playerStageMobCounters.get(playerName);
+        StageMobKillingCounter stageMobKillingCounter = playerStageKillingMobCounters.get(playerName);
         Stage stage = stageMobKillingCounter.getStage();
 
         //这里为了确保安全，判断下是否为非本关卡的怪物
@@ -68,7 +72,7 @@ public class StageListener implements Listener {
 
         //完成任务，触发事件，让指定事件去处理
         if (totalFinishingPercent == 1) {
-            Bukkit.getPluginManager().callEvent(new StageFinishedEvent(RpgPlayerManager.getRpgPlayer(playerName), stage));
+            Bukkit.getPluginManager().callEvent(new StageFinishedEvent(CreeperRpgSystem.getInstance().getRpgPlayerManager().getRpgPlayer(playerName), stage));
         } else {
             //提示需要下一个攻击的目标
             Bukkit.getScheduler().runTaskLaterAsynchronously(plugin, () -> Bukkit.getScheduler().runTask(plugin, () -> {
@@ -91,7 +95,7 @@ public class StageListener implements Listener {
 
     //事件_完成任务
     @EventHandler
-    public void onStageFinishedEvent(StageFinishedEvent event) {
+    public void onStageFinishedEvent(final StageFinishedEvent event) {
         RpgPlayer rpgPlayer = event.getRpgPlayer();
         Player bukkitPlayer = rpgPlayer.getPlayer();
         String playerName = bukkitPlayer.getName();
@@ -112,7 +116,7 @@ public class StageListener implements Listener {
         }
 
         Util.spawnFirework(bukkitPlayer.getLocation()); //释放烟花
-        playerStageMobCounters.get(playerName).resetCounts(); //清空次数
+        playerStageKillingMobCounters.get(playerName).resetCounts(); //清空次数
         stage.performFinishedRewardCommands(bukkitPlayer); //执行指令
 
         //发放奖励
@@ -142,15 +146,15 @@ public class StageListener implements Listener {
 
     // 事件_进入关卡
     @EventHandler
-    public void onStageEnterEvent(StageEnterEvent event) {
+    public void onStageEnterEvent(final StageEnterEvent event) {
         Player player = event.getPlayer();
         Stage stage = event.getStage();
         String playerName = player.getName();
 
         // 不含key，或含key但关卡已变
-        if (!playerStageMobCounters.containsKey(playerName) || (playerStageMobCounters.containsKey(playerName) && !playerStageMobCounters.get(playerName).getStage().getStageCode().equals(stage.getStageCode()))) {
+        if (!playerStageKillingMobCounters.containsKey(playerName) || (playerStageKillingMobCounters.containsKey(playerName) && !playerStageKillingMobCounters.get(playerName).getStage().getStageCode().equals(stage.getStageCode()))) {
             //存储计数器
-            playerStageMobCounters.put(playerName, new StageMobKillingCounter(player, stage));
+            playerStageKillingMobCounters.put(playerName, new StageMobKillingCounter(player, stage));
         }
 
         MsgUtil.sendTitle(player, "&c开始作战");
@@ -158,7 +162,7 @@ public class StageListener implements Listener {
 
     //事件_关卡死亡重生
     @EventHandler
-    public void onStagePlayerRespawnEvent(StagePlayerRespawnEvent event) {
+    public void onStagePlayerRespawnEvent(final StagePlayerRespawnEvent event) {
         Player player = event.getPlayer();
         Stage stage = event.getStage();
 
@@ -167,24 +171,24 @@ public class StageListener implements Listener {
 
     //_含触发事件_StagePlayerDeathEvent
     @EventHandler
-    public void onTriggerPlayerRespawnEvent(PlayerRespawnEvent event) {
+    public void onTriggerPlayerRespawnEvent(final PlayerRespawnEvent event) {
         Player player = event.getPlayer();
         String playerName = player.getName();
 
-        if (!StageManager.isStageWorld(player.getWorld().getName())) {
+        if (!CreeperRpgSystem.getInstance().getStageManager().isStageWorld(player.getWorld().getName())) {
             return;
         }
 
         Bukkit.getScheduler().runTask(plugin, () -> Util.teleportToServerSpawnPoint(player));
 
-        if (playerStageMobCounters.containsKey(playerName)) {
-            Bukkit.getPluginManager().callEvent(new StagePlayerRespawnEvent(player, playerStageMobCounters.get(playerName).getStage()));
+        if (playerStageKillingMobCounters.containsKey(playerName)) {
+            Bukkit.getPluginManager().callEvent(new StagePlayerRespawnEvent(player, playerStageKillingMobCounters.get(playerName).getStage()));
         }
     }
 
     //_含触发事件_StageMobKilledByPlayerEvent
     @EventHandler
-    public void onTriggerEntityDeathEvent(EntityDeathEvent event) {
+    public void onTriggerEntityDeathEvent(final EntityDeathEvent event) {
         LivingEntity target = event.getEntity();
         Entity killer = target.getKiller();
 
@@ -194,7 +198,7 @@ public class StageListener implements Listener {
 
         Player player = (Player) killer;
 
-        if (mythicMobApi.isMythicMob(target) && StageManager.isStageWorld(player.getWorld().getName())) {
+        if (mythicMobApi.isMythicMob(target) && CreeperRpgSystem.getInstance().getStageManager().isStageWorld(player.getWorld().getName())) {
             //触发专用事件
             Bukkit.getPluginManager().callEvent(new RpgMobKilledByPlayerEvent(player, mythicMobApi.getMythicMobInstance(target).getType()));
         }
@@ -202,12 +206,12 @@ public class StageListener implements Listener {
 
     //_含触发事件_StageLeaveEvent
     @EventHandler
-    public void onTriggerPlayerChangeWorldEvent(PlayerChangedWorldEvent event) {
+    public void onTriggerPlayerChangeWorldEvent(final PlayerChangedWorldEvent event) {
         Player player = event.getPlayer();
         String playerName = player.getName();
 
-        if (StageManager.isStageWorld(event.getFrom().getName()) && playerStageMobCounters.containsKey(playerName)) {
-            Bukkit.getPluginManager().callEvent(new StageLeaveEvent(player, playerStageMobCounters.get(playerName).getStage()));
+        if (CreeperRpgSystem.getInstance().getStageManager().isStageWorld(event.getFrom().getName()) && playerStageKillingMobCounters.containsKey(playerName)) {
+            Bukkit.getPluginManager().callEvent(new StageLeaveEvent(player, playerStageKillingMobCounters.get(playerName).getStage()));
         }
     }
 }

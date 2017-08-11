@@ -53,7 +53,7 @@ public class Market {
     }
 
     //传送至关卡出生点
-    public void tp(Player player) {
+    public void tp(final Player player) {
         player.teleport(spawnLoc);
         Bukkit.getPluginManager().callEvent(new MarketEnterEvent(player, this));
     }

@@ -13,7 +13,7 @@ public class StagePlayerRespawnEvent extends Event {
     private Player player;
     private Stage stage;
 
-    public StagePlayerRespawnEvent(Player player, Stage stage) {
+    public StagePlayerRespawnEvent(final Player player, final Stage stage) {
         this.player = player;
         this.stage = stage;
     }

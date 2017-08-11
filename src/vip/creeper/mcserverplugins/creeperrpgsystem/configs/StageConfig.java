@@ -8,9 +8,9 @@ import org.bukkit.Location;
 import org.bukkit.configuration.ConfigurationSection;
 import org.bukkit.configuration.MemorySection;
 import org.bukkit.configuration.file.YamlConfiguration;
-import vip.creeper.mcserverplugins.creeperrpgsystem.RpgConfig;
+import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
+import vip.creeper.mcserverplugins.creeperrpgsystem.Config;
 import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
@@ -23,11 +23,15 @@ import java.util.Optional;
 /**
  * Created by July_ on 2017/7/7.
  */
-public class StageConfig implements RpgConfig {
-    private static ItemManager mythicMobsItemManager = MythicMobs.inst().getItemManager();
+public class StageConfig implements Config {
+    private ItemManager mythicMobsItemManager;
+
+    public StageConfig() {
+        this.mythicMobsItemManager = MythicMobs.inst().getItemManager();
+    }
 
     public void loadConfig() {
-        StageManager.unregisterAllStages();
+        CreeperRpgSystem.getInstance().getStageManager().unregisterAllStages();
 
         File stageFolder = new File(FileUtil.PLUGIN_DATA_FOLDER_PATH + File.separator + "stages");
         File[] stageFolderFiles = stageFolder.listFiles();
@@ -75,7 +79,7 @@ public class StageConfig implements RpgConfig {
                 }
 
                 //注册关卡
-                StageManager.registerStage(new Stage(key,
+                CreeperRpgSystem.getInstance().getStageManager().registerStage(new Stage(key,
                         new Location(Bukkit.getWorld(stageSpawnLocSection.getString("world")),
                                 stageSpawnLocSection.getDouble("x"),
                                 stageSpawnLocSection.getDouble("y"),

@@ -3,9 +3,9 @@ package vip.creeper.mcserverplugins.creeperrpgsystem.commands;
 import org.bukkit.command.Command;
 import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
-import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
+import vip.creeper.mcserverplugins.creeperrpgsystem.CreeperRpgSystem;
 import vip.creeper.mcserverplugins.creeperrpgsystem.RpgCommand;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.StageManager;
+import vip.creeper.mcserverplugins.creeperrpgsystem.Stage;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
 
 /**
@@ -13,7 +13,7 @@ import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
  */
 public class StageCommand implements RpgCommand {
 
-    public boolean execute(CommandSender cs, Command cmd, String lable, String[] args) {
+    public boolean execute(final CommandSender cs, final Command cmd, final String lable, final String[] args) {
         if (args.length == 3) {
             String stageCode = args[2];
 
@@ -22,15 +22,10 @@ public class StageCommand implements RpgCommand {
                 return true;
             }
 
-            Stage stage = StageManager.getStage(stageCode);
+            Stage stage = CreeperRpgSystem.getInstance().getStageManager().getStage(stageCode);
 
             if (stage == null) {
                 MsgUtil.sendMsg(cs, "&c关卡代码不存在.");
-                return true;
-            }
-
-            if (!(cs instanceof Player)) {
-                MsgUtil.sendMsg(cs, "&c该指令必须由玩家执行!");
                 return true;
             }
 
@@ -40,7 +35,7 @@ public class StageCommand implements RpgCommand {
             switch (args[1]) {
                 case "send_confirm_msg":
                     player.closeInventory();
-                    StageManager.getStage(stageCode).sendConfirmTpMsg(player);
+                    CreeperRpgSystem.getInstance().getStageManager().getStage(stageCode).sendConfirmTpMsg(player);
                     return true;
                 case "tp":
                     if (!stage.isFreeStage() && !stage.getPlayerStageState(playerName)) {

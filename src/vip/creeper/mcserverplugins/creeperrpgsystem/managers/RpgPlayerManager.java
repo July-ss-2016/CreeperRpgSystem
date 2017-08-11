@@ -11,10 +11,14 @@ import java.util.HashMap;
  * Created by July_ on 2017/7/15.
  */
 public class RpgPlayerManager {
-    private static HashMap<String, RpgPlayer> rpgPlayers = new HashMap<>();
+    private HashMap<String, RpgPlayer> rpgPlayers;
+
+    public RpgPlayerManager() {
+        this.rpgPlayers = new HashMap<>();
+    }
 
     //得到rpg玩家
-    public static RpgPlayer getRpgPlayer(final String playerName) {
+    public RpgPlayer getRpgPlayer(final String playerName) {
         if (!rpgPlayers.containsKey(playerName)) {
             File file = FileUtil.getPlayerDataFile(playerName);
             rpgPlayers.put(playerName, new RpgPlayer(playerName, file));
@@ -23,12 +27,12 @@ public class RpgPlayerManager {
     }
 
     //注销某个rpg玩家
-    public static void unregisterPlayer(final Player player) {
+    public void unregisterPlayer(final Player player) {
         rpgPlayers.remove(player.getName());
     }
 
     //注销所有rpg玩家
-    public static void unregisterAll() {
+    public void unregisterAll() {
         rpgPlayers.clear();
     }
 }

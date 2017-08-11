@@ -8,7 +8,6 @@ import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import org.bukkit.inventory.PlayerInventory;
 import vip.creeper.mcserverplugins.creeperrpgsystem.events.StageEnterEvent;
-import vip.creeper.mcserverplugins.creeperrpgsystem.managers.RpgPlayerManager;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.ConfigUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.FileUtil;
 import vip.creeper.mcserverplugins.creeperrpgsystem.utils.MsgUtil;
@@ -90,7 +89,7 @@ public class Stage {
 
     //得到玩家关卡解锁状态
     public boolean getPlayerStageState(final String playerName) {
-        return RpgPlayerManager.getRpgPlayer(playerName).getStageState(this.stageCode);
+        return CreeperRpgSystem.getInstance().getRpgPlayerManager().getRpgPlayer(playerName).getStageState(this.stageCode);
     }
 
     //关卡传送
